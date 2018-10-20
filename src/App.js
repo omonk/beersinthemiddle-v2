@@ -1,8 +1,22 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { connect } from 'react-redux';
+import geoLocationRequest from './redux/actions/geo-location';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.props = this.props;
+  }
+
+  componentWillMount() {
+    if ('geolocation' in navigator) {
+      this.props.geoLocationRequest();
+    }
+  }
+
   render() {
     return (
       <div className="App">
@@ -25,4 +39,18 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = ({ geolocation }) => {
+  return {
+    geolocation: geolocation,
+  };
+};
+const mapDispatchToProps = (dispatch, state) => {
+  return {
+    geoLocationRequest: () => dispatch(geoLocationRequest),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
