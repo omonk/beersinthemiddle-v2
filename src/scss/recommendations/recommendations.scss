@@ -1,0 +1,13 @@
+.recommendations {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: scroll;
+}
+
+.recommendation {
+  background-color: white;
+  flex: 1 0 25%;
+  margin: 1rem;
+}
