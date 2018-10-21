@@ -1,6 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { removeLocation } from '../../redux/actions/locations';
+import PropTypes from 'prop-types';
 import Location from './location';
 
 const Locations = ({ locations, handleRemoval }) =>
@@ -16,18 +15,13 @@ const Locations = ({ locations, handleRemoval }) =>
     </ul>
   ) : null;
 
-const mapStateToProps = ({ locations }) => ({
-  locations,
-});
+Locations.defaultProps = {
+  locations: [],
+};
 
-const mapDispatchToProps = dispatch => ({
-  handleRemoval: placeId => {
-    console.log('jhahah');
-    dispatch(removeLocation(placeId));
-  },
-});
+Locations.propTypes = {
+  locations: PropTypes.array.isRequired,
+  handleRemoval: PropTypes.func.isRequired,
+};
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Locations);
+export default Locations;

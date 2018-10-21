@@ -1,3 +1,5 @@
+import { mapCenterLoading, mapCenterLoadingFinished } from './map';
+
 export const GEO_LOCATION_REQUEST = 'GEO_LOCATION_REQUEST';
 export const GEO_LOCATION_SUCCESS = 'GEO_LOCATION_SUCCESS';
 export const GEO_LOCATION_ERROR = 'GEO_LOCATION_ERROR';
@@ -21,10 +23,12 @@ const geoLocationError = (err = undefined) => ({
 
 export default (dispatch, state) => {
   dispatch(requestingGeoLocation);
+  dispatch(mapCenterLoading);
 
   return navigator.geolocation.getCurrentPosition(
     pos => {
       dispatch(geoLocationSuccess(pos));
+      dispatch(mapCenterLoadingFinished);
     },
     error => {
       console.log(error);

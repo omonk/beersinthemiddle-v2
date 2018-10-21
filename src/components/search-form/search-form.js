@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PlacesAutocomplete from 'react-places-autocomplete';
+import PropTypes from 'prop-types';
 
 class SearchForm extends Component {
   constructor(props) {
@@ -8,13 +9,12 @@ class SearchForm extends Component {
     this.state = {
       inputValue: '',
     };
-    this.handleLocationSelect = this.handleLocationSelect.bind(this);
   }
 
-  handleLocationSelect(address, placeId) {
+  handleLocationSelect = (address, placeId) => {
     this.props.addLocationToState(address, placeId);
     this.setState({ inputValue: '' });
-  }
+  };
 
   render() {
     const { geolocation, geoLocationRequest } = this.props;
@@ -56,13 +56,19 @@ class SearchForm extends Component {
             )}
           </PlacesAutocomplete>
         </form>
-        {!geolocation.lat &&
-          !geolocation.lng && (
+        {!!geolocation &&
+          (!geolocation.lat && !geolocation.lng) && (
             <button onClick={geoLocationRequest}>Get location</button>
           )}
       </Fragment>
     );
   }
 }
+
+SearchForm.propTypes = {
+  addLocationToState: PropTypes.func.isRequired,
+  geoLocationRequest: PropTypes.func.isRequired,
+  geolocation: PropTypes.object.isRequired,
+};
 
 export default SearchForm;
