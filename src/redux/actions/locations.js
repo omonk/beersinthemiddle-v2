@@ -1,5 +1,5 @@
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
-import { push } from 'connected-react-router';
+import { setMapCenterFromLatestLocations } from './map';
 export const ADD_LOCATION = 'ADD_LOCATION';
 export const ADD_LOCATION_SUCCESS = 'ADD_LOCATION_SUCCESS';
 export const ADD_LOCATION_ERROR = 'ADD_LOCATION_ERROR';
@@ -25,6 +25,7 @@ export const addLocation = ({ address, placeId }) => (dispatch, getState) => {
     .then(results => getLatLng(results[0]))
     .then(({ lat, lng }) => {
       dispatch(addLocationSuccess({ address, lat, lng, placeId }));
+      dispatch(setMapCenterFromLatestLocations({ lat, lng }));
     })
     .catch(err => dispatch(addLocationError(err)));
 };

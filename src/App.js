@@ -22,6 +22,7 @@ const App = ({
   mapCenterLoading,
   fourSquareRequest,
   recommendations,
+  center,
 }) => {
   return (
     <div className="App">
@@ -49,7 +50,7 @@ const App = ({
         )}
         <div className="map__wrapper--inner">
           <Map
-            center={geolocation}
+            center={center}
             locations={locations}
             locationsMidPoint={locationsMidPoint}
             recommendations={recommendations}
@@ -65,10 +66,12 @@ const mapStateToProps = ({
   geolocation,
   locationsMidPoint,
   recommendations,
+  map,
 }) => {
   return {
     geolocation,
     locations,
+    center: map.center,
     locationsMidPoint,
     recommendations,
   };

@@ -1,8 +1,8 @@
 import {
-  FOUR_SQUARE_REQUEST,
+  // FOUR_SQUARE_REQUEST,
   FOUR_SQUARE_REQUEST_SUCCESS,
-  FOUR_SQUARE_REQUEST_ERROR,
-  SET_AVERAGE_LAT_LNG,
+  // FOUR_SQUARE_REQUEST_ERROR,
+  // SET_AVERAGE_LAT_LNG,
 } from '../actions/recommendations';
 
 const initialState = [];

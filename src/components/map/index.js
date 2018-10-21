@@ -15,11 +15,11 @@ class Map extends Component {
       locations,
       locationsMidPoint,
       recommendations,
+      center,
     } = this.props;
-
     return (
       <GoogleMapReact
-        center={[51.509865, -0.118092]} // "London"
+        center={{ ...center }}
         defaultZoom={zoom}
         bootstrapURLKeys={{
           key: 'AIzaSyC4yjCTPVzFZx0Fj0P9mSei1btoPQexc0s',
@@ -67,6 +67,7 @@ class Map extends Component {
 Map.propTypes = {
   locations: PropTypes.array.isRequired,
   locationsMidPoint: PropTypes.object,
+  center: PropTypes.object.isRequired,
 };
 
 export default Map;
