@@ -2,13 +2,15 @@ import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 export const ADD_LOCATION = 'ADD_LOCATION';
 export const ADD_LOCATION_SUCCESS = 'ADD_LOCATION_SUCCESS';
 export const ADD_LOCATION_ERROR = 'ADD_LOCATION_ERROR';
+export const REMOVE_LOCATION = 'REMOVE_LOCATION';
 
-const addLocationSuccess = ({ address, lat, lng }) => ({
+const addLocationSuccess = ({ address, lat, lng, placeId }) => ({
   type: ADD_LOCATION_SUCCESS,
   payload: {
     address,
     lat,
     lng,
+    placeId,
   },
 });
 
@@ -17,9 +19,16 @@ const addLocationError = payload => ({
   payload,
 });
 
-export const addLocation = ({ address }) => (dispatch, state) => {
+export const addLocation = ({ address, placeId }) => (dispatch, state) => {
   geocodeByAddress(address)
     .then(results => getLatLng(results[0]))
-    .then(({ lat, lng }) => dispatch(addLocationSuccess({ address, lat, lng })))
+    .then(({ lat, lng }) =>
+      dispatch(addLocationSuccess({ address, lat, lng, placeId }))
+    )
     .catch(err => dispatch(addLocationError(err)));
 };
+
+export const removeLocation = placeId => ({
+  type: REMOVE_LOCATION,
+  payload: placeId,
+});

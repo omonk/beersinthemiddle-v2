@@ -12,7 +12,6 @@ class SearchForm extends Component {
   }
 
   handleLocationSelect(address, placeId) {
-    console.log(this.props);
     this.props.addLocationToState(address, placeId);
     this.setState({ inputValue: '' });
   }
@@ -56,8 +55,6 @@ class SearchForm extends Component {
               </div>
             )}
           </PlacesAutocomplete>
-
-          <button type="submit">Send Locations</button>
         </form>
         {!geolocation.lat &&
           !geolocation.lng && (
