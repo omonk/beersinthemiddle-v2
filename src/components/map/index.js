@@ -3,7 +3,7 @@ import GoogleMapReact from 'google-map-react';
 import PropTypes from 'prop-types';
 import { generate } from 'shortid';
 
-import locationsMetaData from '../../assets/markerPoints.json';
+import locationsMetaData from '../../assets/marker-points.json';
 import LocationMarker from './components/locationMarker';
 import LocationMidPointMarker from './components/locationMidPointMarker';
 import RecommendationsMarker from './components/recommendationsMarker';

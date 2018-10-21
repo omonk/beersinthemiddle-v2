@@ -9,6 +9,7 @@ import Map from './components/map';
 
 import geoLocationRequest from './redux/actions/geo-location';
 import { addLocation, removeLocation } from './redux/actions/locations';
+import getRecommendations from './redux/actions/recommendations';
 
 const App = ({
   locations,
@@ -18,6 +19,8 @@ const App = ({
   handleRemoval,
   locationsMidPoint,
   mapCenterLoading,
+  fourSquareRequest,
+  recommendations,
 }) => {
   return (
     <div className="App">
@@ -29,7 +32,7 @@ const App = ({
         />
         <Locations locations={locations} handleRemoval={handleRemoval} />
         {locations.length > 1 && (
-          <button className="button is-primary" onClick={geoLocationRequest}>
+          <button className="button is-primary" onClick={fourSquareRequest}>
             Find the best places to eat/drink
           </button>
         )}
@@ -45,6 +48,7 @@ const App = ({
             center={geolocation}
             locations={locations}
             locationsMidPoint={locationsMidPoint}
+            recommendations={recommendations}
           />
         </div>
       </div>
@@ -52,11 +56,17 @@ const App = ({
   );
 };
 
-const mapStateToProps = ({ locations, geolocation, locationsMidPoint }) => {
+const mapStateToProps = ({
+  locations,
+  geolocation,
+  locationsMidPoint,
+  recommendations,
+}) => {
   return {
     geolocation,
     locations,
     locationsMidPoint,
+    recommendations,
   };
 };
 
@@ -67,6 +77,7 @@ const mapDispatchToProps = (dispatch, state) => {
       dispatch(addLocation({ address, placeId }));
     },
     handleRemoval: placeId => dispatch(removeLocation(placeId)),
+    fourSquareRequest: () => dispatch(getRecommendations()),
   };
 };
 
