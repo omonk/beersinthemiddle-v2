@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "bulma": "^0.7.2",
     "classnames": "^2.2.6",
     "connected-react-router": "^4.5.0",
     "google-map-react": "^1.0.9",
     "history": "^4.7.2",
+    "node-sass": "^4.9.4",
     "prop-types": "^15.6.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",

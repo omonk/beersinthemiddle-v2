@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './scss/App.scss';
 
 import { connect } from 'react-redux';
 
@@ -21,12 +21,14 @@ const App = ({
 }) => {
   return (
     <div className="App">
-      <SearchForm
-        addLocationToState={addLocationToState}
-        geoLocationRequest={geoLocationRequest}
-        geolocation={geolocation}
-      />
-      <Locations locations={locations} handleRemoval={handleRemoval} />
+      <section className="search box">
+        <SearchForm
+          addLocationToState={addLocationToState}
+          geoLocationRequest={geoLocationRequest}
+          geolocation={geolocation}
+        />
+        <Locations locations={locations} handleRemoval={handleRemoval} />
+      </section>
       <div className="map__wrapper--outer">
         {mapCenterLoading && (
           <div className="map__loading">
@@ -34,7 +36,11 @@ const App = ({
           </div>
         )}
         <div className="map__wrapper--inner">
-          <Map locations={locations} locationsMidPoint={locationsMidPoint} />
+          <Map
+            center={geolocation}
+            locations={locations}
+            locationsMidPoint={locationsMidPoint}
+          />
         </div>
       </div>
     </div>

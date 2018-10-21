@@ -36,12 +36,16 @@ class SearchForm extends Component {
               loading,
             }) => (
               <div>
-                <input
-                  {...getInputProps({
-                    placeholder: 'Search Places ...',
-                    className: 'location-search-input',
-                  })}
-                />
+                <div className="field">
+                  <label className="label">Add your locations</label>
+                  <input
+                    {...getInputProps({
+                      placeholder: 'Search Places ...',
+                      className: 'input',
+                      type: 'text',
+                    })}
+                  />
+                </div>
                 <div className="autocomplete-dropdown-container">
                   {loading && <div>Loading...</div>}
                   {suggestions.map(suggestion => {
@@ -58,7 +62,9 @@ class SearchForm extends Component {
         </form>
         {!!geolocation &&
           (!geolocation.lat && !geolocation.lng) && (
-            <button onClick={geoLocationRequest}>Get location</button>
+            <button className="button" onClick={geoLocationRequest}>
+              Get current location
+            </button>
           )}
       </Fragment>
     );

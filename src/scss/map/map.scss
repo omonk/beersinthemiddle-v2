@@ -1,0 +1,28 @@
+.map__wrapper--outer {
+  height: 100%;
+  width: 100vw;
+}
+
+.map__wrapper--inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.map__loading {
+  position: absolute;
+  color: white;
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}

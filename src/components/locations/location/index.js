@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 const Location = ({ data, handleRemoval }) => (
   <li>
     <p>{data.address}</p>
-    <button onClick={() => handleRemoval(data.placeId)}>X</button>
+    <button
+      className="button is-danger is-outlined"
+      onClick={() => handleRemoval(data.placeId)}
+    >
+      <span>Delete</span>
+    </button>
   </li>
 );
 

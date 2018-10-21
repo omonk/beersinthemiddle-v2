@@ -12,6 +12,7 @@ class Map extends Component {
   render() {
     const {
       center,
+      defaultCenter,
       zoom,
       locations,
       locationsMidPoint,
@@ -21,6 +22,7 @@ class Map extends Component {
     return (
       <GoogleMapReact
         center={center}
+        defaultCenter={defaultCenter}
         defaultZoom={zoom}
         bootstrapURLKeys={{
           key: 'AIzaSyC4yjCTPVzFZx0Fj0P9mSei1btoPQexc0s',
@@ -66,9 +68,9 @@ class Map extends Component {
 }
 
 Map.defaultProps = {
-  center: {
-    lat: 59.95,
-    lng: 30.33,
+  defaultCenter: {
+    lat: 51.5,
+    lng: -0.11,
   },
   zoom: 11,
 };
