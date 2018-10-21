@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 const Location = ({ data, handleRemoval }) => (
-  <li>
+  <li className="location-list-item">
     <p>{data.address}</p>
     <button
       className="button is-danger is-outlined"

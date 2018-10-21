@@ -28,6 +28,11 @@ const App = ({
           geolocation={geolocation}
         />
         <Locations locations={locations} handleRemoval={handleRemoval} />
+        {locations.length > 1 && (
+          <button className="button is-primary" onClick={geoLocationRequest}>
+            Find the best places to eat/drink
+          </button>
+        )}
       </section>
       <div className="map__wrapper--outer">
         {mapCenterLoading && (

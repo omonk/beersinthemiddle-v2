@@ -4,7 +4,7 @@ import Location from './location';
 
 const Locations = ({ locations, handleRemoval }) =>
   locations && locations.length ? (
-    <ul>
+    <ul className="location-list">
       {locations.map((location, i) => (
         <Location
           key={location.placeId}
