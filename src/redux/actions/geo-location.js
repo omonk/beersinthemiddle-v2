@@ -14,15 +14,22 @@ const geoLocationSuccess = ({ coords }) => ({
   },
 });
 
-const geoLocationError = (err = undefined) => {};
+const geoLocationError = (err = undefined) => ({
+  type: GEO_LOCATION_ERROR,
+  err,
+});
 
 export default (dispatch, state) => {
   dispatch(requestingGeoLocation);
+
   return navigator.geolocation.getCurrentPosition(
     pos => {
       dispatch(geoLocationSuccess(pos));
     },
-    geoLocationError,
+    error => {
+      console.log(error);
+      dispatch(geoLocationError(error));
+    },
     {
       enableHighAccuracy: true,
       timeout: 5000,
