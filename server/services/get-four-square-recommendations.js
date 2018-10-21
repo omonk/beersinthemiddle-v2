@@ -22,6 +22,7 @@ const getFourSquareRecommendations = ll => {
 const formatFourSquareResponse = data => {
   const venues = data.response.groups[0];
 
+  console.log(JSON.stringify(venues.items[0], null, 2));
   return venues.items.map(item => ({
     title: get(item, 'venue.name', 'N/A'),
     location: {

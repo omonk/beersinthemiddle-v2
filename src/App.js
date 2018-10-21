@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import SearchForm from './components/search-form/search-form';
 import Locations from './components/locations';
 import Map from './components/map';
+import Recommendations from './components/recommendations/recommendations';
 
 import geoLocationRequest from './redux/actions/geo-location';
 import { addLocation, removeLocation } from './redux/actions/locations';
@@ -37,6 +38,9 @@ const App = ({
           </button>
         )}
       </section>
+
+      <Recommendations data={recommendations} />
+
       <div className="map__wrapper--outer">
         {mapCenterLoading && (
           <div className="map__loading">
