@@ -1,3 +1,4 @@
+import { push } from 'connected-react-router';
 import { getLatLngMidPoint } from '../selectors/locations/locations';
 
 export const FOUR_SQUARE_REQUEST = 'FOUR_SQUARE_REQUEST';
@@ -25,13 +26,14 @@ const setAverageLatLng = payload => ({
 });
 
 export default () => (dispatch, getState) => {
-  const averageLatLng = getLatLngMidPoint(getState());
+  const { lat, lng } = getLatLngMidPoint(getState());
 
-  if (averageLatLng.lat && averageLatLng.lng) {
-    dispatch(setAverageLatLng(averageLatLng));
+  if (lat && lng) {
+    dispatch(setAverageLatLng({ lat, lng }));
     dispatch(recommendationsRequest);
+    dispatch(push(`/search?ll=${lat},${lng}`));
 
-    fetch(`/api/foursquare?ll=${averageLatLng.lat},${averageLatLng.lng}`, {
+    fetch(`/api/foursquare?ll=${lat},${lng}`, {
       method: 'get',
       headers: {
         'Content-Type': 'application/json',

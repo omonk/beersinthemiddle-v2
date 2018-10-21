@@ -11,8 +11,7 @@ import RecommendationsMarker from './components/recommendationsMarker';
 class Map extends Component {
   render() {
     const {
-      center,
-      zoom,
+      zoom = 11,
       locations,
       locationsMidPoint,
       recommendations,
@@ -20,7 +19,7 @@ class Map extends Component {
 
     return (
       <GoogleMapReact
-        center={center}
+        center={[51.509865, -0.118092]} // "London"
         defaultZoom={zoom}
         bootstrapURLKeys={{
           key: 'AIzaSyC4yjCTPVzFZx0Fj0P9mSei1btoPQexc0s',
