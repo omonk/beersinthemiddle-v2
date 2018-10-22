@@ -66,7 +66,7 @@ module.exports = (req, res) => {
   const { ll } = req.query;
   return (
     getFourSquareRecommendations(ll)
-      // .then(res => Promise.all(getVenueDetails(res)))
+      .then(res => Promise.all(getVenueDetails(res)))
       .then(formatFourSquareResponse)
       .then(response => res.send({ response }))
       .catch(err => {

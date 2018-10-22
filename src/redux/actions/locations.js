@@ -20,6 +20,30 @@ const addLocationError = payload => ({
   payload,
 });
 
+export const addLocationFromGeoLocation = pos => (dispatch, getState) => {
+  const { longitude, latitude } = pos.coords;
+  fetch(`/api/reverse-geocode?lat=${latitude}&lng=${longitude}`, {
+    method: 'get',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(res => res.json())
+    .then(res => {
+      dispatch(
+        addLocationSuccess({
+          address: res.address,
+          lat: latitude,
+          lng: longitude,
+          placeId: res.placeId,
+        })
+      );
+      dispatch(
+        setMapCenterFromLatestLocations({ lat: latitude, lng: longitude })
+      );
+    });
+};
+
 export const addLocation = ({ address, placeId }) => (dispatch, getState) => {
   geocodeByAddress(address)
     .then(results => getLatLng(results[0]))

@@ -70,7 +70,7 @@ class SearchForm extends Component {
         {!!geolocation &&
           (!geolocation.lat && !geolocation.lng) && (
             <button className="button" onClick={geoLocationRequest}>
-              Get current location
+              Add current location
             </button>
           )}
       </Fragment>

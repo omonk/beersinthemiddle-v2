@@ -1,4 +1,5 @@
 import { mapCenterLoading, mapCenterLoadingFinished } from './map';
+import { addLocationFromGeoLocation } from './locations';
 
 export const GEO_LOCATION_REQUEST = 'GEO_LOCATION_REQUEST';
 export const GEO_LOCATION_SUCCESS = 'GEO_LOCATION_SUCCESS';
@@ -27,6 +28,7 @@ export default (dispatch, state) => {
 
   return navigator.geolocation.getCurrentPosition(
     pos => {
+      dispatch(addLocationFromGeoLocation(pos));
       dispatch(geoLocationSuccess(pos));
       dispatch(mapCenterLoadingFinished);
     },
