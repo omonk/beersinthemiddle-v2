@@ -4,7 +4,7 @@ const Location = ({ data, handleRemoval }) => (
   <li className="location-list-item">
     <p>{data.address}</p>
     <button
-      className="button is-danger is-outlined"
+      className="button is-danger is-outlined is-small"
       onClick={() => handleRemoval(data.placeId)}
     >
       <span>Delete</span>

@@ -2,6 +2,8 @@ import {
   MAP_CENTER_LOADING,
   MAP_CENTER_LOADING_FINISHED,
   MAP_CENTER_FROM_LATEST_LOCATION,
+  MAP_CENTER_FROM_RECOMMENDATION_COORDS,
+  MAP_UPDATE_ZOOM_VALUE,
 } from '../actions/map';
 
 import { SET_AVERAGE_LAT_LNG } from '../actions/recommendations';
@@ -9,7 +11,9 @@ import { SET_AVERAGE_LAT_LNG } from '../actions/recommendations';
 const initialState = {
   mapCenterLoading: false,
   center: { lat: 51.48431530675587, lng: -0.1216834827836015 },
+  zoom: 11,
 };
+
 export default (state = initialState, action) => {
   switch (action.type) {
     case MAP_CENTER_LOADING:
@@ -27,11 +31,16 @@ export default (state = initialState, action) => {
         ...state,
         averageLatLng: action.payload,
       };
-    case MAP_CENTER_FROM_LATEST_LOCATION:
-      console.log('fired');
+    case MAP_UPDATE_ZOOM_VALUE:
       return {
         ...state,
+        zoom: action.payload,
+      };
+    case MAP_CENTER_FROM_RECOMMENDATION_COORDS:
+    case MAP_CENTER_FROM_LATEST_LOCATION:
+      return {
         center: action.payload,
+        zoom: 18,
       };
     default:
       return state;

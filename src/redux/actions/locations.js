@@ -24,8 +24,8 @@ export const addLocation = ({ address, placeId }) => (dispatch, getState) => {
   geocodeByAddress(address)
     .then(results => getLatLng(results[0]))
     .then(({ lat, lng }) => {
-      dispatch(addLocationSuccess({ address, lat, lng, placeId }));
       dispatch(setMapCenterFromLatestLocations({ lat, lng }));
+      dispatch(addLocationSuccess({ address, lat, lng, placeId }));
     })
     .catch(err => dispatch(addLocationError(err)));
 };

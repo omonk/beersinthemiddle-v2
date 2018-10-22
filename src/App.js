@@ -11,6 +11,10 @@ import Recommendations from './components/recommendations/recommendations';
 import geoLocationRequest from './redux/actions/geo-location';
 import { addLocation, removeLocation } from './redux/actions/locations';
 import getRecommendations from './redux/actions/recommendations';
+import {
+  updateMapZoomValue,
+  centerMapToRecommendation,
+} from './redux/actions/map';
 
 const App = ({
   locations,
@@ -22,11 +26,14 @@ const App = ({
   mapCenterLoading,
   fourSquareRequest,
   recommendations,
+  centerMapToRecommendation,
+  updateMapZoomValue,
   center,
+  zoom,
 }) => {
   return (
     <div className="App">
-      <section className="search box">
+      <section className="search content box">
         <SearchForm
           addLocationToState={addLocationToState}
           geoLocationRequest={geoLocationRequest}
@@ -40,7 +47,10 @@ const App = ({
         )}
       </section>
 
-      <Recommendations data={recommendations} />
+      <Recommendations
+        data={recommendations}
+        centerMapToRecommendation={centerMapToRecommendation}
+      />
 
       <div className="map__wrapper--outer">
         {mapCenterLoading && (
@@ -51,9 +61,11 @@ const App = ({
         <div className="map__wrapper--inner">
           <Map
             center={center}
+            zoom={zoom}
             locations={locations}
             locationsMidPoint={locationsMidPoint}
             recommendations={recommendations}
+            updateMapZoomValue={updateMapZoomValue}
           />
         </div>
       </div>
@@ -72,6 +84,7 @@ const mapStateToProps = ({
     geolocation,
     locations,
     center: map.center,
+    zoom: map.zoom,
     locationsMidPoint,
     recommendations,
   };
@@ -85,6 +98,9 @@ const mapDispatchToProps = (dispatch, state) => {
     },
     handleRemoval: placeId => dispatch(removeLocation(placeId)),
     fourSquareRequest: () => dispatch(getRecommendations()),
+    centerMapToRecommendation: coords =>
+      dispatch(centerMapToRecommendation(coords)),
+    updateMapZoomValue: zoom => dispatch(updateMapZoomValue(zoom)),
   };
 };
 

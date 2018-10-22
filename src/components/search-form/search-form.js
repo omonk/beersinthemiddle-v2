@@ -23,6 +23,13 @@ class SearchForm extends Component {
 
     return (
       <Fragment>
+        <h1 className="title">
+          Beers In The Middle.{' '}
+          <span role="img" aria-label="beer">
+            🍻
+          </span>
+        </h1>
+        <p>Find the most convienient places to hang out with your friends</p>
         <form>
           <PlacesAutocomplete
             value={inputValue}

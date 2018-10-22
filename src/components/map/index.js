@@ -11,16 +11,23 @@ import RecommendationsMarker from './components/recommendationsMarker';
 class Map extends Component {
   render() {
     const {
-      zoom = 11,
+      zoom,
       locations,
       locationsMidPoint,
       recommendations,
+      updateMapZoomValue,
       center,
     } = this.props;
     return (
       <GoogleMapReact
         center={{ ...center }}
+        zoom={zoom}
         defaultZoom={zoom}
+        onChange={event => {
+          if (event.zoom !== zoom) {
+            updateMapZoomValue(event.zoom);
+          }
+        }}
         bootstrapURLKeys={{
           key: 'AIzaSyC4yjCTPVzFZx0Fj0P9mSei1btoPQexc0s',
           language: 'en',

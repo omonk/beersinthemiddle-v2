@@ -1,3 +1,5 @@
+$dimensions: 30px;
+$scale: 0.75;
 .recommendations {
   position: relative;
   z-index: 1;
@@ -10,4 +12,36 @@
   background-color: white;
   flex: 1 0 25%;
   margin: 1rem;
+  &__marker {
+    position: absolute;
+    left: -($dimensions / 2);
+    top: -($dimensions / 2);
+    background: white;
+    border-radius: 50%;
+    border: 2px darken($info, 5) solid;
+    width: $dimensions;
+    height: $dimensions;
+    transform: scale($scale);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all ease 400ms;
+  }
+
+  &--hovered {
+    .recommendation__marker {
+      transform: scale(1);
+      border-width: 4px;
+    }
+  }
+
+  &__hover-box {
+    padding: 15px;
+    width: 150px;
+    background: white;
+    z-index: 100;
+    position: absolute;
+    top: ($dimensions / 2) + 5px;
+    left: -75px;
+  }
 }
