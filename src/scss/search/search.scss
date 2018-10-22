@@ -1,9 +1,16 @@
 .search {
   z-index: 1;
   position: relative;
-  width: 20%;
+  width: 100%;
   padding: 1rem;
-  margin: 1rem;
+
+  @media screen and (min-width: 768px) {
+    width: 33.3%;
+  }
+
+  @media screen and (min-width: 1024px) {
+    width: 25%;
+  }
 }
 
 .location-list {

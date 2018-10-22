@@ -1,5 +1,6 @@
 import { push } from 'connected-react-router';
 import { getLatLngMidPoint } from '../selectors/locations/locations';
+import { setMapCenterFromLatestLocations } from './map';
 
 export const FOUR_SQUARE_REQUEST = 'FOUR_SQUARE_REQUEST';
 export const FOUR_SQUARE_REQUEST_SUCCESS = 'FOUR_SQUARE_REQUEST_SUCCESS';
@@ -41,6 +42,7 @@ export default () => (dispatch, getState) => {
     })
       .then(res => res.json())
       .then(res => {
+        dispatch(setMapCenterFromLatestLocations({ lat, lng }, 16));
         dispatch(recommendationsSuccess(res));
       })
       .catch(err => {

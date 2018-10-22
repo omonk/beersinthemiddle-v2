@@ -29,7 +29,7 @@ export default (state = initialState, action) => {
     case SET_AVERAGE_LAT_LNG:
       return {
         ...state,
-        averageLatLng: action.payload,
+        locationsMidPoint: action.payload,
       };
     case MAP_UPDATE_ZOOM_VALUE:
       return {
@@ -39,8 +39,8 @@ export default (state = initialState, action) => {
     case MAP_CENTER_FROM_RECOMMENDATION_COORDS:
     case MAP_CENTER_FROM_LATEST_LOCATION:
       return {
-        center: action.payload,
-        zoom: 18,
+        center: { ...action.payload.coords },
+        zoom: action.payload.zoom ? action.payload.zoom : state.zoom,
       };
     default:
       return state;

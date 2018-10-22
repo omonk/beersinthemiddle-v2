@@ -22,7 +22,7 @@ class Map extends Component {
       <GoogleMapReact
         center={{ ...center }}
         zoom={zoom}
-        defaultZoom={zoom}
+        defaultZoom={16}
         onChange={event => {
           if (event.zoom !== zoom) {
             updateMapZoomValue(event.zoom);

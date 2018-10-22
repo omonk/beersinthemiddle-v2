@@ -32,21 +32,22 @@ const App = ({
   zoom,
 }) => {
   return (
-    <div className="App">
-      <section className="search box">
-        <SearchForm
-          addLocationToState={addLocationToState}
-          geoLocationRequest={geoLocationRequest}
-          geolocation={geolocation}
-        />
-        <Locations locations={locations} handleRemoval={handleRemoval} />
-        {locations.length > 1 && (
-          <button className="button is-primary" onClick={fourSquareRequest}>
-            Find the best places to eat/drink
-          </button>
-        )}
+    <div className=" App">
+      <section className="search">
+        <div className="box">
+          <SearchForm
+            addLocationToState={addLocationToState}
+            geoLocationRequest={geoLocationRequest}
+            geolocation={geolocation}
+          />
+          <Locations locations={locations} handleRemoval={handleRemoval} />
+          {locations.length > 1 && (
+            <button className="button is-primary" onClick={fourSquareRequest}>
+              Find the best places to eat/drink
+            </button>
+          )}
+        </div>
       </section>
-
       <Recommendations
         data={recommendations}
         centerMapToRecommendation={centerMapToRecommendation}
@@ -85,7 +86,7 @@ const mapStateToProps = ({
     locations,
     center: map.center,
     zoom: map.zoom,
-    locationsMidPoint,
+    locationsMidPoint: map.locationsMidPoint,
     recommendations,
   };
 };

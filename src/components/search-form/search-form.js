@@ -23,8 +23,8 @@ class SearchForm extends Component {
 
     return (
       <Fragment>
-        <h1 className="title">
-          Beers In The Middle.{' '}
+        <h1 className="title is-small-mobile">
+          Beers In The Middle.
           <span role="img" aria-label="beer">
             🍻
           </span>

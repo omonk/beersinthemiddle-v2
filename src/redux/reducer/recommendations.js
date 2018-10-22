@@ -8,9 +8,10 @@ import {
 const initialState = [];
 
 export default (state = initialState, action) => {
+  console.log({ state, action });
   switch (action.type) {
     case FOUR_SQUARE_REQUEST_SUCCESS:
-      return action.payload.response;
+      return action.payload;
     default:
       return state;
   }

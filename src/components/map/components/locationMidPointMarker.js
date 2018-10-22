@@ -1,19 +1,100 @@
 import React from 'react';
 
 export default () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    version="1.1"
-    x="0px"
-    y="0px"
-    viewBox="0 0 100 125"
-    enableBackground="new 0 0 100 100"
-    fill="black"
-    width="25px"
-    height="25px"
-  >
-    <g>
-      <polygon points="50,77.4 23.7,91.2 28.8,62 7.5,41.3 36.9,37 50,10.4 63.1,37 92.5,41.3 71.2,62 76.3,91.2  " />
-    </g>
+  <svg version="1.1" id="radar-circle-other" pointer-events="none">
+    <circle
+      cx="50%"
+      cy="50%"
+      r="0"
+      fill-opacity="0"
+      stroke="white"
+      stroke-width="16px"
+      stroke-opacity="0.4"
+    >
+      <animate
+        attributeName="r"
+        from="0"
+        to="1220"
+        dur="6s"
+        repeatCount="indefinite"
+        begin="0.25s"
+      />
+    </circle>
+
+    <circle
+      cx="50%"
+      cy="50%"
+      r="0"
+      fill-opacity="0"
+      stroke="white"
+      stroke-width="12px"
+      stroke-opacity="0.4"
+    >
+      <animate
+        attributeName="r"
+        from="0"
+        to="1220"
+        dur="6s"
+        repeatCount="indefinite"
+        begin="1.25s"
+      />
+    </circle>
+
+    <circle
+      cx="50%"
+      cy="50%"
+      r="0"
+      fill-opacity="0"
+      stroke="white"
+      stroke-width="8px"
+      stroke-opacity="0.4"
+    >
+      <animate
+        attributeName="r"
+        from="0"
+        to="1220"
+        dur="6s"
+        repeatCount="indefinite"
+        begin="2.25s"
+      />
+    </circle>
+
+    <circle
+      cx="50%"
+      cy="50%"
+      r="0"
+      fill-opacity="0"
+      stroke="white"
+      stroke-width="4px"
+      stroke-opacity="0.4"
+    >
+      <animate
+        attributeName="r"
+        from="0"
+        to="1220"
+        dur="6s"
+        repeatCount="indefinite"
+        begin="3.25s"
+      />
+    </circle>
+
+    <circle
+      cx="50%"
+      cy="50%"
+      r="0"
+      fill-opacity="0"
+      stroke="white"
+      stroke-width="2px"
+      stroke-opacity="0.4"
+    >
+      <animate
+        attributeName="r"
+        from="0"
+        to="1220"
+        dur="6s"
+        repeatCount="indefinite"
+        begin="4.25s"
+      />
+    </circle>
   </svg>
 );
