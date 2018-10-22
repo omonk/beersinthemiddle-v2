@@ -12,7 +12,6 @@ const getAverage = (arr, key) => {
 };
 
 export default locations => {
-  console.log(locations);
   const latLongRadians = locations.map(location => ({
     lat: decimelToRadian(location.lat),
     lng: decimelToRadian(location.lng),

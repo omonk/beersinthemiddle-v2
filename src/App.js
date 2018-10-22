@@ -33,7 +33,7 @@ const App = ({
 }) => {
   return (
     <div className="App">
-      <section className="search content box">
+      <section className="search box">
         <SearchForm
           addLocationToState={addLocationToState}
           geoLocationRequest={geoLocationRequest}

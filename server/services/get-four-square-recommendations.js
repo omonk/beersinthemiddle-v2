@@ -26,29 +26,29 @@ const getFourSquareRecommendations = ll => {
 
 const formatFourSquareResponse = data => {
   console.log(JSON.stringify(data, null, 2));
-  // const venues = data.response.groups[0];
+  const venues = data.response.groups[0];
 
-  // return venues.items.map(item => ({
-  //   title: get(item, 'venue.name', 'N/A'),
-  //   id: get(item, 'venue.id', 'N/A'),
-  //   location: {
-  //     address: get(item, 'venue.location.formattedAddress', ['N/A']),
-  //     lat: get(item, 'venue.location.lat', 'N/A'),
-  //     lng: get(item, 'venue.location.lng', 'N/A'),
-  //   },
-  //   url: get(item, 'venue.url', 'N/A'),
-  //   price: {
-  //     priceRange: get(item, 'venue.price.tier', 'N/A'),
-  //   },
-  //   rating: get(item, 'venue.rating', 'N/A'),
-  //   categories: get(item, 'venue.categories', []).map(
-  //     category => category.shortName
-  //   ),
-  //   hours: {
-  //     status: get(item, 'venue.hours.status', 'N/A'),
-  //     isOpen: get(item, 'venue.hours.isOpen', 'N/A'),
-  //   },
-  // }));
+  return venues.items.map(item => ({
+    title: get(item, 'venue.name', 'N/A'),
+    id: get(item, 'venue.id', 'N/A'),
+    location: {
+      address: get(item, 'venue.location.formattedAddress', ['N/A']),
+      lat: get(item, 'venue.location.lat', 'N/A'),
+      lng: get(item, 'venue.location.lng', 'N/A'),
+    },
+    url: get(item, 'venue.url', 'N/A'),
+    price: {
+      priceRange: get(item, 'venue.price.tier', 'N/A'),
+    },
+    rating: get(item, 'venue.rating', 'N/A'),
+    categories: get(item, 'venue.categories', []).map(
+      category => category.shortName
+    ),
+    hours: {
+      status: get(item, 'venue.hours.status', 'N/A'),
+      isOpen: get(item, 'venue.hours.isOpen', 'N/A'),
+    },
+  }));
 };
 
 const getVenueDetails = ({ response }) => {
@@ -64,12 +64,14 @@ const getVenueDetails = ({ response }) => {
 
 module.exports = (req, res) => {
   const { ll } = req.query;
-  return getFourSquareRecommendations(ll)
-    .then(res => Promise.all(getVenueDetails(res)))
-    .then(formatFourSquareResponse)
-    .then(response => res.send({ response }))
-    .catch(err => {
-      console.log(`Error: ${err}`);
-      res.status(500).json({ error: err.toString() });
-    });
+  return (
+    getFourSquareRecommendations(ll)
+      // .then(res => Promise.all(getVenueDetails(res)))
+      .then(formatFourSquareResponse)
+      .then(response => res.send({ response }))
+      .catch(err => {
+        console.log(`Error: ${err}`);
+        res.status(500).json({ error: err.toString() });
+      })
+  );
 };

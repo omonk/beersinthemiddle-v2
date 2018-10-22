@@ -8,8 +8,13 @@ const Recommendation = ({ data, centerMapToRecommendation }) => {
       {data.categories && <p>{data.categories.map(category => category)}</p>}
       {data.location.address && (
         <address>
-          {data.location.address.map(line => {
-            return `${line}<br/>`;
+          {data.location.address.map((line, index, arr) => {
+            return (
+              <p style={{ marginBottom: '0px' }}>
+                {line}
+                {index < arr.length - 1 ? ',' : null}
+              </p>
+            );
           })}
         </address>
       )}
