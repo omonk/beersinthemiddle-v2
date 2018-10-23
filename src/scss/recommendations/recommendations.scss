@@ -1,17 +1,35 @@
 $dimensions: 30px;
 $scale: 0.75;
-.recommendations {
-  position: relative;
+
+.recommendations-wrapper {
+  position: absolute;
+  bottom: 0;
   z-index: 1;
-  display: flex;
-  flex-wrap: nowrap;
+  padding: 1rem;
   overflow: scroll;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: nowrap;
+
+  @media screen and (max-width: 768px) {
+    padding: 0.25rem;
+  }
+}
+
+.recommendation-box {
+  padding: 1rem;
+  margin-right: 1rem;
+  flex: 1 0 25%;
+
+  @media screen and (max-width: 768px) {
+    flex-basis: calc(100vw - 0.5rem);
+  }
 }
 
 .recommendation {
   background-color: white;
-  flex: 1 0 25%;
-  margin: 1rem;
+
   &__marker {
     position: absolute;
     left: -($dimensions / 2);

@@ -2,6 +2,8 @@ import React, { Component, Fragment } from 'react';
 import PlacesAutocomplete from 'react-places-autocomplete';
 import PropTypes from 'prop-types';
 
+import IconLocate from '../icons/icon-locate';
+
 class SearchForm extends Component {
   constructor(props) {
     super(props);
@@ -23,13 +25,15 @@ class SearchForm extends Component {
 
     return (
       <Fragment>
-        <h1 className="title is-small-mobile">
+        <h1 className="title is-hidden-mobile">
           Beers In The Middle.
           <span role="img" aria-label="beer">
             🍻
           </span>
         </h1>
-        <p>Find the most convienient places to hang out with your friends</p>
+        <p className="is-hidden-mobile">
+          Find the most convienient places to hang out with your friends
+        </p>
         <form>
           <PlacesAutocomplete
             value={inputValue}
@@ -42,7 +46,7 @@ class SearchForm extends Component {
               getSuggestionItemProps,
               loading,
             }) => (
-              <div>
+              <Fragment>
                 <div className="field">
                   <label className="label">Add your locations</label>
                   <input
@@ -57,20 +61,24 @@ class SearchForm extends Component {
                   {loading && <div>Loading...</div>}
                   {suggestions.map(suggestion => {
                     return (
-                      <div {...getSuggestionItemProps(suggestion, {})}>
+                      <div
+                        className="suggestion"
+                        {...getSuggestionItemProps(suggestion, {})}
+                      >
                         <span>{suggestion.description}</span>
                       </div>
                     );
                   })}
                 </div>
-              </div>
+              </Fragment>
             )}
           </PlacesAutocomplete>
         </form>
         {!!geolocation &&
           (!geolocation.lat && !geolocation.lng) && (
             <button className="button" onClick={geoLocationRequest}>
-              Add current location
+              <span className="is-hidden-mobile">Add current location</span>
+              <IconLocate />
             </button>
           )}
       </Fragment>

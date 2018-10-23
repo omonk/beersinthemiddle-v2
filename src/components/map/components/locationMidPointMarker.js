@@ -1,15 +1,15 @@
 import React from 'react';
 
 export default () => (
-  <svg version="1.1" id="radar-circle-other" pointer-events="none">
+  <svg version="1.1" id="radar-circle-other" pointerEvents="none">
     <circle
       cx="50%"
       cy="50%"
       r="0"
-      fill-opacity="0"
+      fillOpacity="0"
       stroke="white"
-      stroke-width="16px"
-      stroke-opacity="0.4"
+      strokeWidth="16px"
+      strokeOpacity="0.4"
     >
       <animate
         attributeName="r"
@@ -25,10 +25,10 @@ export default () => (
       cx="50%"
       cy="50%"
       r="0"
-      fill-opacity="0"
+      fillOpacity="0"
       stroke="white"
-      stroke-width="12px"
-      stroke-opacity="0.4"
+      strokeWidth="12px"
+      strokeOpacity="0.4"
     >
       <animate
         attributeName="r"
@@ -44,10 +44,10 @@ export default () => (
       cx="50%"
       cy="50%"
       r="0"
-      fill-opacity="0"
+      fillOpacity="0"
       stroke="white"
-      stroke-width="8px"
-      stroke-opacity="0.4"
+      strokeWidth="8px"
+      strokeOpacity="0.4"
     >
       <animate
         attributeName="r"
@@ -63,10 +63,10 @@ export default () => (
       cx="50%"
       cy="50%"
       r="0"
-      fill-opacity="0"
+      fillOpacity="0"
       stroke="white"
-      stroke-width="4px"
-      stroke-opacity="0.4"
+      strokeWidth="4px"
+      strokeOpacity="0.4"
     >
       <animate
         attributeName="r"
@@ -82,10 +82,10 @@ export default () => (
       cx="50%"
       cy="50%"
       r="0"
-      fill-opacity="0"
+      fillOpacity="0"
       stroke="white"
-      stroke-width="2px"
-      stroke-opacity="0.4"
+      strokeWidth="2px"
+      strokeOpacity="0.4"
     >
       <animate
         attributeName="r"

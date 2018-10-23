@@ -11,10 +11,12 @@ import Recommendations from './components/recommendations/recommendations';
 import geoLocationRequest from './redux/actions/geo-location';
 import { addLocation, removeLocation } from './redux/actions/locations';
 import getRecommendations from './redux/actions/recommendations';
+import { toggleSearchBoxHidden } from './redux/actions/ui';
 import {
   updateMapZoomValue,
   centerMapToRecommendation,
 } from './redux/actions/map';
+import { hasRecommendationsSelector } from './redux/selectors/recommendations/recommendations';
 
 const App = ({
   locations,
@@ -30,10 +32,15 @@ const App = ({
   updateMapZoomValue,
   center,
   zoom,
+  searchBoxIsHidden,
+  hasRecommendations,
+  toggleSearchBox,
 }) => {
   return (
     <div className=" App">
-      <section className="search">
+      <section
+        className={`search ${searchBoxIsHidden ? 'search--is-hidden' : ''}`}
+      >
         <div className="box">
           <SearchForm
             addLocationToState={addLocationToState}
@@ -46,6 +53,9 @@ const App = ({
               Find the best places to eat/drink
             </button>
           )}
+          <div onClick={() => (hasRecommendations ? toggleSearchBox() : null)}>
+            CLICK HERE
+          </div>
         </div>
       </section>
       <Recommendations
@@ -74,13 +84,10 @@ const App = ({
   );
 };
 
-const mapStateToProps = ({
-  locations,
-  geolocation,
-  locationsMidPoint,
-  recommendations,
-  map,
-}) => {
+const mapStateToProps = state => {
+  const { locations, geolocation, recommendations, map, ui } = state;
+
+  const hasRecommendations = hasRecommendationsSelector(state);
   return {
     geolocation,
     locations,
@@ -88,6 +95,8 @@ const mapStateToProps = ({
     zoom: map.zoom,
     locationsMidPoint: map.locationsMidPoint,
     recommendations,
+    hasRecommendations,
+    searchBoxIsHidden: ui.searchBoxIsHidden,
   };
 };
 
@@ -102,6 +111,7 @@ const mapDispatchToProps = (dispatch, state) => {
     centerMapToRecommendation: coords =>
       dispatch(centerMapToRecommendation(coords)),
     updateMapZoomValue: zoom => dispatch(updateMapZoomValue(zoom)),
+    toggleSearchBox: () => dispatch(toggleSearchBoxHidden),
   };
 };
 

@@ -3,7 +3,7 @@ import Recommendation from './recommendation';
 
 const Recommendations = ({ data, centerMapToRecommendation }) => {
   return data && data.length ? (
-    <section className="recommendations">
+    <section className="recommendations-wrapper">
       {data &&
         data.length &&
         data.map(i => (
