@@ -13,7 +13,8 @@
     "start-server": "nodemon ./server/app.js",
     "prod:start-server": "node ./server/app.js",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "now": "now -e FOURSQUARE_API_CLIENT=@FOURSQUARE_API_CLIENT -e FOURSQUARE_API_SECRET=@FOURSQUARE_API_SECRET -e GOOGLE_MAPS_API_KEY=@GOOGLE_MAPS_API_KEY"
   },
   "eslintConfig": {
     "extends": "react-app"
