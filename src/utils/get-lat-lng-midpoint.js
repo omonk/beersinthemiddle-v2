@@ -11,7 +11,25 @@ const getAverage = (arr, key) => {
   return arr.reduce((acc, current) => acc + current[key], 0) / arr.length;
 };
 
+const checkLocationData = locations =>
+  locations.every(
+    location =>
+      location &&
+      location.lat &&
+      location.lng &&
+      typeof location.lat === 'number' &&
+      typeof location.lng === 'number'
+  );
+
 export default locations => {
+  if ((locations && locations.length < 1) || !locations) {
+    throw new Error(`Location data: ${locations}`);
+  }
+
+  if (!checkLocationData(locations)) {
+    throw new Error(`Locations missing lat/lng data: ${locations}`);
+  }
+
   const latLongRadians = locations.map(location => ({
     lat: decimelToRadian(location.lat),
     lng: decimelToRadian(location.lng),
