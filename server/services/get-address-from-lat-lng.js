@@ -1,4 +1,3 @@
-console.log(process.env.GOOGLE_MAPS_API_KEY);
 const googleMapsClient = require('@google/maps').createClient({
   key: process.env.GOOGLE_MAPS_API_KEY,
   Promise: Promise,
@@ -15,7 +14,6 @@ module.exports = (req, res) => {
     .reverseGeocode({ latlng: { lat, lng } })
     .asPromise()
     .then(response => {
-      console.log(JSON.stringify(response.json.results[0], null, 2));
       const body = response.json.results[0];
       const address = body.formatted_address;
       const placeId = body.place_id;

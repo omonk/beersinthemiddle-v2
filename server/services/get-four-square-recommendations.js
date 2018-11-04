@@ -63,7 +63,6 @@ module.exports = (req, res) => {
     .then(formatFourSquareResponse)
     .then(response => res.send(response))
     .catch(err => {
-      console.log(`Error: ${err}`);
       res.status(500).json({ error: err.toString() });
     });
 };

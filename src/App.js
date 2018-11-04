@@ -37,7 +37,7 @@ const App = ({
   toggleSearchBox,
 }) => {
   return (
-    <div className=" App">
+    <div className="App">
       <section
         className={`search ${searchBoxIsHidden ? 'search--is-hidden' : ''}`}
       >
@@ -53,9 +53,14 @@ const App = ({
               Find the best places to eat/drink
             </button>
           )}
-          <div onClick={() => (hasRecommendations ? toggleSearchBox() : null)}>
-            CLICK HERE
-          </div>
+          <button
+            className={`search-hide ${
+              !hasRecommendations ? 'search-hide--is-hidden' : null
+            }`}
+            onClick={() => (hasRecommendations ? toggleSearchBox() : null)}
+          >
+            {searchBoxIsHidden ? 'Show form' : 'Hide form'}
+          </button>
         </div>
       </section>
       <Recommendations

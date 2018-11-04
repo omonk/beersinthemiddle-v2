@@ -20,9 +20,9 @@ export const setMapCenterFromLatestLocations = (coords, zoom = undefined) => ({
   payload: { ...coords, zoom },
 });
 
-export const centerMapToRecommendation = coords => ({
+export const centerMapToRecommendation = (coords, zoom = 17) => ({
   type: MAP_CENTER_FROM_RECOMMENDATION_COORDS,
-  payload: { ...coords },
+  payload: { ...coords, zoom },
 });
 
 export const updateMapZoomValue = zoom => ({

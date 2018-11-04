@@ -39,10 +39,10 @@ export default (state = initialState, action) => {
     case MAP_CENTER_FROM_RECOMMENDATION_COORDS:
     case MAP_CENTER_FROM_LATEST_LOCATION:
       console.log(action.payload);
-      const { lat, lng } = action.payload;
+      const { lat, lng, zoom } = action.payload;
       return {
         center: { lat, lng },
-        zoom: action.payload.zoom ? action.payload.zoom : state.zoom,
+        zoom: zoom ? zoom : state.zoom,
       };
     default:
       return state;

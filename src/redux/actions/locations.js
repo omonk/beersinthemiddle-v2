@@ -23,7 +23,6 @@ const addLocationError = payload => ({
 export const addLocationFromGeoLocation = pos => (dispatch, getState) => {
   const { longitude, latitude } = pos.coords;
   fetch(`/api/reverse-geocode?lat=${latitude}&lng=${longitude}`, {
-    method: 'get',
     headers: {
       'Content-Type': 'application/json',
     },
