@@ -1,12 +1,12 @@
 require('dotenv').config();
 const fetch = require('node-fetch');
 const { get } = require('lodash');
+const { median } = require('mathjs');
 
 const moment = require('moment-timezone');
 const momentDurationFormatSetup = require('moment-duration-format');
 
 momentDurationFormatSetup(moment);
-console.log(moment.duration(1305, 'seconds').format('h [hrs], m [min]'));
 
 // const locations = [
 //   {
@@ -23,7 +23,46 @@ console.log(moment.duration(1305, 'seconds').format('h [hrs], m [min]'));
 //   },
 // ];
 
+// const locations = [
+//   {
+//     address: 'Brixton, London, UK',
+//     lat: 51.4612794,
+//     lng: -0.11561480000000302,
+//     placeId: 'ChIJ0fUEMjkEdkgRkcf2eo-_Kdk',
+//   },
+//   {
+//     address: 'Peckham, London, UK',
+//     lat: 51.474191,
+//     lng: -0.06913699999995515,
+//     placeId: 'ChIJTcNKP6cDdkgRKAPfDcz_IWU',
+//   },
+//   {
+//     address: 'Tottenham Hale, London, UK',
+//     lat: 51.58868349999999,
+//     lng: -0.05995810000001711,
+//     placeId: 'ChIJd2YAyCUcdkgRc5WwmOQBpy4',
+//   },
+// ];
+
 const locations = [
+  {
+    address: '41 Criffel Ave, London SW2 4AY, UK',
+    lat: 51.4412722,
+    lng: -0.13112849999999998,
+    placeId: 'ChIJa1pKHjAEdkgRX-9W5q0snVI',
+  },
+  {
+    address: 'balham',
+    lat: 51.4428311,
+    lng: -0.15261409999993703,
+    placeId: null,
+  },
+  {
+    address: 'Forest Hill, London, UK',
+    lat: 51.4397781,
+    lng: -0.054641599999968093,
+    placeId: 'ChIJ6RB0ZMEDdkgRmN417WcjuRs',
+  },
   {
     address: 'Brixton, London, UK',
     lat: 51.4612794,
@@ -31,22 +70,16 @@ const locations = [
     placeId: 'ChIJ0fUEMjkEdkgRkcf2eo-_Kdk',
   },
   {
-    address: 'Peckham, London, UK',
-    lat: 51.474191,
-    lng: -0.06913699999995515,
-    placeId: 'ChIJTcNKP6cDdkgRKAPfDcz_IWU',
-  },
-  {
-    address: 'Tottenham Hale, London, UK',
-    lat: 51.58868349999999,
-    lng: -0.05995810000001711,
-    placeId: 'ChIJd2YAyCUcdkgRc5WwmOQBpy4',
+    address: 'Acton, London, UK',
+    lat: 51.5084214,
+    lng: -0.2745505000000321,
+    placeId: 'ChIJT3dT5xwOdkgRxyJUcCnsIEQ',
   },
 ];
 
 const midPoint = {
-  lat: 51.48431530675587,
-  lng: -0.1216834827836015,
+  lat: 51.468445548460366,
+  lng: -0.11447927525283325,
 };
 
 const gmapsUrl = params =>
@@ -55,52 +88,63 @@ const gmapsUrl = params =>
   }`;
 
 const getTravelTimes = response => {
-  return response
-    .map(r => {
-      const leg = get(r, 'routes[0].legs[0]', undefined);
-      console.log({ leg });
-      return {
-        duration: leg.duration.value,
-        lat: leg.start_location.lat,
-        lng: leg.start_location.lng,
-      };
-    })
-    .sort((a, b) => a.duration - b.duration);
+  return response.map(({ directions, location }) => {
+    const leg = get(directions, 'routes[0].legs[0]', undefined);
+    return {
+      duration: leg.duration.value,
+      lat: leg.start_location.lat,
+      lng: leg.start_location.lng,
+      location,
+    };
+  });
 };
 
 const validateTimes = journeys => {
-  console.log({ journeys });
   const times = journeys.map(journey => journey.duration);
-  const total = times.length;
+  const timesMedians = median(times);
+  const upperBound = timesMedians + timesMedians;
 
-  const range = journeys[total - 1].duration - journeys[0].duration;
-  const rangeEitherSide = range / 2;
-  const average = times.reduce((a, b) => a + b, 0) / total;
+  // 2x Standard Deviation
+  const anomaly = journeys.reduce((acc, curr) => {
+    if (curr.duration > upperBound) {
+      return acc.concat([{ ...curr }]);
+    }
+    return acc;
+  }, []);
 
-  console.log({ range, average, rangeEitherSide });
-  const withinRange = i => i.duration;
-  journeys.map(withinRange);
-  return journeys;
+  return { journeys, anomaly };
 };
 
-const getTimings = locations => {
-  const midPointValues = Object.values(midPoint).join(',');
+const fetchTravelTimes = (locations, midPoint) => {
+  const destination = Object.values(midPoint).join(',');
+  return locations.map(location => {
+    const params = `origin=${Object.values(location).join(
+      ','
+    )}&destination=${destination}`;
+    return fetch(gmapsUrl(params))
+      .then(res => res.json())
+      .then(res => ({
+        directions: res,
+        location,
+      }))
+      .catch(e => {
+        throw new Error(e);
+      });
+  });
+};
 
-  return Promise.all(
-    locations.map(location => {
-      const params = `origin=${Object.values(location).join(
-        ','
-      )}&destination=${midPointValues}`;
-      return fetch(gmapsUrl(params))
-        .then(res => res.json())
-        .catch(e => {
-          throw new Error(e);
-        });
-    })
-  )
+const getTimings = (locations, midPoint) =>
+  Promise.all(fetchTravelTimes(locations, midPoint))
     .then(response => getTravelTimes(response))
-    .then(journeys => validateTimes(journeys));
-  // .then(times => console.log(times));
-};
+    .then(journeys => validateTimes(journeys))
+    .then(journeys => {
+      console.log(JSON.stringify(journeys, null, 2));
+      if (!journeys) {
+        throw new Error(`Journeys missing`);
+      }
+      if (journeys && journeys.anomaly) {
+      }
+      return journeys;
+    });
 
-getTimings(locations);
+getTimings(locations, midPoint);
