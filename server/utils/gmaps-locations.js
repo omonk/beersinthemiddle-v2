@@ -143,30 +143,30 @@ const getTimings = (locations, midPoint) =>
       }
       if (journeys && journeys.anomaly) {
         const {
-          lat: lat1,
-          lng: lng1,
+          lat: anomalyLat,
+          lng: anomalyLng,
           distanceToMidPoint,
         } = journeys.anomaly[0];
-        const { lat: lat2, lng: lng2 } = midPoint;
+        const { lat: midPointLat, lng: midPointLng } = midPoint;
 
         // I think theres something wrong with this calculation
         const bearingMidPointToAnomaly = calculateBearing(
-          lat1,
-          lng1,
-          lat2,
-          lng2
+          anomalyLat,
+          anomalyLng,
+          midPointLat,
+          midPointLng
         );
 
         // Using this new midpoint we can recalculate the travel times to try
-        // and make sure the travel distances are normalised for most locations🤞🏼
+        // and make sure the travel distances are standadised for most locations🤞🏼
         const newMidPoint = destVincenty(
-          lat1,
-          lng1,
+          midPointLat,
+          midPointLng,
           bearingMidPointToAnomaly,
-          (distanceToMidPoint / 100) * 10
+          (distanceToMidPoint / 100) * 10 // Move towards anomaly - 10%
         );
 
-        console.log({ newMidPoint, lat1, lng1 });
+        console.log({ newMidPoint, midPointLat, midPointLng });
       }
       return journeys;
     });
