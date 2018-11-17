@@ -84,13 +84,21 @@ const midPoint = {
 const gmapsUrl = params =>
   `https://maps.googleapis.com/maps/api/directions/json?${params}&mode=transit&key=${
     process.env.GOOGLE_MAPS_API_KEY
-  }`;
+  }&departure_time=${moment()
+    .add(1, 'weeks')
+    .isoWeekday(5)
+    .set('hour', 19)
+    .set('minute', 0)
+    .unix()}`; // next friday at 19:00
 
 const getTravelTimes = response => {
   return response.map(({ directions, location }) => {
     const leg = get(directions, 'routes[0].legs[0]', undefined);
     return {
       duration: leg.duration.value,
+      durationFormatted: moment
+        .duration(leg.duration.value, 'seconds')
+        .format('h [hrs], m [min]'),
       lat: leg.start_location.lat,
       lng: leg.start_location.lng,
       distanceToMidPoint: leg.distance.value,
@@ -137,11 +145,14 @@ const getTimings = (locations, midPoint) =>
     .then(response => getTravelTimes(response))
     .then(journeys => validateTimes(journeys))
     .then(journeys => {
-      // console.log(JSON.stringify(journeys, null, 2));
       if (!journeys) {
         throw new Error(`Journeys missing`);
       }
-      if (journeys && journeys.anomaly) {
+      if (journeys && journeys.anomaly.length) {
+        console.log(
+          journeys.journeys.map(journey => journey.durationFormatted),
+          journeys.anomaly.map(journey => journey.durationFormatted)
+        );
         const {
           lat: anomalyLat,
           lng: anomalyLng,
@@ -149,12 +160,11 @@ const getTimings = (locations, midPoint) =>
         } = journeys.anomaly[0];
         const { lat: midPointLat, lng: midPointLng } = midPoint;
 
-        // I think theres something wrong with this calculation
         const bearingMidPointToAnomaly = calculateBearing(
-          anomalyLat,
-          anomalyLng,
           midPointLat,
-          midPointLng
+          midPointLng,
+          anomalyLat,
+          anomalyLng
         );
 
         // Using this new midpoint we can recalculate the travel times to try
@@ -163,11 +173,13 @@ const getTimings = (locations, midPoint) =>
           midPointLat,
           midPointLng,
           bearingMidPointToAnomaly,
-          (distanceToMidPoint / 100) * 10 // Move towards anomaly - 10%
+          (distanceToMidPoint / 100) * 30 // Move towards anomaly x%
         );
 
-        console.log({ newMidPoint, midPointLat, midPointLng });
+        return getTimings(locations, newMidPoint);
       }
+
+      console.log(journeys.journeys.map(journey => journey.durationFormatted));
       return journeys;
     });
 
