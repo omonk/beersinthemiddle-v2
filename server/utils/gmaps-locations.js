@@ -2,10 +2,9 @@ require('dotenv').config();
 const fetch = require('node-fetch');
 const { get } = require('lodash');
 const { median } = require('mathjs');
-
 const moment = require('moment-timezone');
 const momentDurationFormatSetup = require('moment-duration-format');
-
+const { destVincenty, calculateBearing } = require('./coordinate-calculations');
 momentDurationFormatSetup(moment);
 
 // const locations = [
@@ -90,12 +89,11 @@ const gmapsUrl = params =>
 const getTravelTimes = response => {
   return response.map(({ directions, location }) => {
     const leg = get(directions, 'routes[0].legs[0]', undefined);
-    console.log(JSON.stringify(directions.routes[0], null, 2));
     return {
       duration: leg.duration.value,
       lat: leg.start_location.lat,
       lng: leg.start_location.lng,
-      location,
+      distanceToMidPoint: leg.distance.value,
     };
   });
 };
@@ -139,11 +137,36 @@ const getTimings = (locations, midPoint) =>
     .then(response => getTravelTimes(response))
     .then(journeys => validateTimes(journeys))
     .then(journeys => {
-      console.log(JSON.stringify(journeys, null, 2));
+      // console.log(JSON.stringify(journeys, null, 2));
       if (!journeys) {
         throw new Error(`Journeys missing`);
       }
       if (journeys && journeys.anomaly) {
+        const {
+          lat: lat1,
+          lng: lng1,
+          distanceToMidPoint,
+        } = journeys.anomaly[0];
+        const { lat: lat2, lng: lng2 } = midPoint;
+
+        // I think theres something wrong with this calculation
+        const bearingMidPointToAnomaly = calculateBearing(
+          lat1,
+          lng1,
+          lat2,
+          lng2
+        );
+
+        // Using this new midpoint we can recalculate the travel times to try
+        // and make sure the travel distances are normalised for most locations🤞🏼
+        const newMidPoint = destVincenty(
+          lat1,
+          lng1,
+          bearingMidPointToAnomaly,
+          (distanceToMidPoint / 100) * 10
+        );
+
+        console.log({ newMidPoint, lat1, lng1 });
       }
       return journeys;
     });
