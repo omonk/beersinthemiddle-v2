@@ -90,6 +90,7 @@ const gmapsUrl = params =>
 const getTravelTimes = response => {
   return response.map(({ directions, location }) => {
     const leg = get(directions, 'routes[0].legs[0]', undefined);
+    console.log(JSON.stringify(directions.routes[0], null, 2));
     return {
       duration: leg.duration.value,
       lat: leg.start_location.lat,

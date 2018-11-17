@@ -1,11 +1,4 @@
-// http://geomidpoint.com/calculation.html
-const decimelToRadian = degrees => {
-  return degrees * (Math.PI / 180);
-};
-
-const radianToDecimel = radians => {
-  return radians * (180 / Math.PI);
-};
+import { decimelToRadian, radianToDecimel } from '../shared/utils/location';
 
 const getAverage = (arr, key) => {
   return arr.reduce((acc, current) => acc + current[key], 0) / arr.length;
@@ -21,6 +14,7 @@ const checkLocationData = locations =>
       typeof location.lng === 'number'
   );
 
+// http://geomidpoint.com/calculation.ht
 export default locations => {
   if ((locations && locations.length < 1) || !locations) {
     throw new Error(`Location data: ${locations}`);
