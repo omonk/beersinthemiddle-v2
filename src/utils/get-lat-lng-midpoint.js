@@ -1,4 +1,4 @@
-import { decimelToRadian, radianToDecimel } from '../shared/utils/location';
+import { decimelToRadian, radianToDecimel } from './location';
 
 const getAverage = (arr, key) => {
   return arr.reduce((acc, current) => acc + current[key], 0) / arr.length;

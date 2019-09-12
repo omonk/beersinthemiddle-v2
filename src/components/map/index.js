@@ -29,7 +29,7 @@ class Map extends Component {
           }
         }}
         bootstrapURLKeys={{
-          key: 'AIzaSyC4yjCTPVzFZx0Fj0P9mSei1btoPQexc0s',
+          key: 'AIzaSyDMRzng0aKA1u0FC_t46SqdLD_HirVdWRU',
           language: 'en',
         }}
       >
