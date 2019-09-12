@@ -8,6 +8,8 @@ import LocationMarker from './components/locationMarker';
 import LocationMidPointMarker from './components/locationMidPointMarker';
 import RecommendationsMarker from './components/recommendationsMarker';
 
+const { GMAPS_API_KEY } = process.env;
+
 class Map extends Component {
   render() {
     const {
@@ -29,7 +31,7 @@ class Map extends Component {
           }
         }}
         bootstrapURLKeys={{
-          key: 'AIzaSyDMRzng0aKA1u0FC_t46SqdLD_HirVdWRU',
+          key: GMAPS_API_KEY,
           language: 'en',
         }}
       >
