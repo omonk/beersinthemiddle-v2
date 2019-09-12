@@ -38,7 +38,7 @@
     "connected-react-router": "^4.5.0",
     "google-map-react": "^1.0.9",
     "history": "^4.7.2",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.13",
     "node-fetch": "^2.2.0",
     "node-sass": "^4.9.4",
     "nodemon": "^1.18.4",
