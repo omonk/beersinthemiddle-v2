@@ -3,7 +3,6 @@ import GoogleMapReact from 'google-map-react';
 import PropTypes from 'prop-types';
 import { generate } from 'shortid';
 
-import locationsMetaData from '../../assets/marker-points.json';
 import LocationMarker from './components/locationMarker';
 import LocationMidPointMarker from './components/locationMidPointMarker';
 import RecommendationsMarker from './components/recommendationsMarker';
@@ -51,7 +50,7 @@ class MapContainer extends Component {
               lat={location.lat}
               lng={location.lng}
               text=""
-              color={locationsMetaData.locations[i].color}
+              color={location.color}
             />
           ))}
 

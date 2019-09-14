@@ -6,10 +6,13 @@ export const ADD_LOCATION_SUCCESS = 'ADD_LOCATION_SUCCESS';
 export const ADD_LOCATION_ERROR = 'ADD_LOCATION_ERROR';
 export const REMOVE_LOCATION = 'REMOVE_LOCATION';
 
-const addLocationSuccess = payload => ({
-  type: ADD_LOCATION_SUCCESS,
-  payload,
-});
+const addLocationSuccess = payload => {
+  console.log({ payload });
+  return {
+    type: ADD_LOCATION_SUCCESS,
+    payload,
+  };
+};
 
 const addLocationError = payload => ({
   type: ADD_LOCATION_ERROR,
@@ -25,7 +28,6 @@ export const addLocationFromGeoLocation = pos => (dispatch, getState) => {
   })
     .then(res => res.json())
     .then(res => {
-      console.log(randomColor());
       dispatch({
         type: ADD_LOCATION_SUCCESS,
         payload: {
@@ -51,7 +53,9 @@ export const addLocation = ({ address, placeId }) => (dispatch, getState) => {
     .then(results => getLatLng(results[0]))
     .then(({ lat, lng }) => {
       dispatch(setMapCenterFromLatestLocations({ lat, lng }));
-      dispatch(addLocationSuccess({ address, lat, lng, placeId }));
+      dispatch(
+        addLocationSuccess({ address, lat, lng, placeId, color: randomColor() })
+      );
     })
     .catch(err => dispatch(addLocationError(err)));
 };
