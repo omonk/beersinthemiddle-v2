@@ -1,77 +1,49 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import PlacesAutocomplete from 'react-places-autocomplete';
 import PropTypes from 'prop-types';
 import { Formik, Form, Field } from 'formik';
 import IconLocate from '../icons/icon-locate';
+import Locations from '../locations';
 import generate from 'shortid';
 
 const renderPlacesAutocomplete = ({ field, form, addLocationToState }) => {
   return (
-    <>
-      {/* <PlacesAutocomplete
-        value={field.value}
-        onChange={search => {
-          form.setFieldValue(field.name, search);
-        }}
-      >
-        {({ getInputProps, getSuggestionItemProps, suggestions }) => {
-          const additionalProps = {
-            name: field.name,
-          };
-
-          const autocompleteInputProps = getInputProps(additionalProps);
-
-          return (
-            <div className="autocomplete-root">
-              <input {...autocompleteInputProps} />
-              <div className="autocomplete-dropdown-container">
-                {suggestions.map(suggestion => (
-                  <div {...getSuggestionItemProps(suggestion)}>
-                    <span>{suggestion.description}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          );
-        }}
-      </PlacesAutocomplete> */}
-      <PlacesAutocomplete
-        value={field.value}
-        onChange={value => form.setFieldValue(field.name, value)}
-        onSelect={(address, placeId) => {
-          addLocationToState(address, placeId);
-          form.setFieldValue(field.name, '');
-        }}
-      >
-        {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-          <Fragment>
-            <div className="field">
-              <label className="label">Add your locations</label>
-              <input
-                {...getInputProps({
-                  placeholder: 'Search Places ...',
-                  className: 'input',
-                  type: 'text',
-                })}
-              />
-            </div>
-            <div className="autocomplete-dropdown-container">
-              {loading && <div>Loading...</div>}
-              {suggestions.map(suggestion => {
-                return (
-                  <div
-                    className="suggestion"
-                    {...getSuggestionItemProps(suggestion, {})}
-                  >
-                    <span>{suggestion.description}</span>
-                  </div>
-                );
+    <PlacesAutocomplete
+      value={field.value}
+      onChange={value => form.setFieldValue(field.name, value)}
+      onSelect={(address, placeId) => {
+        addLocationToState(address, placeId);
+        form.setFieldValue(field.name, '');
+      }}
+    >
+      {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+        <Fragment>
+          <div className="field">
+            <label className="label">Add your locations</label>
+            <input
+              {...getInputProps({
+                placeholder: 'Search Places ...',
+                className: 'input',
+                type: 'text',
               })}
-            </div>
-          </Fragment>
-        )}
-      </PlacesAutocomplete>
-    </>
+            />
+          </div>
+          <div className="autocomplete-dropdown-container">
+            {loading && <div>Loading...</div>}
+            {suggestions.map(suggestion => {
+              return (
+                <div
+                  className="suggestion"
+                  {...getSuggestionItemProps(suggestion, {})}
+                >
+                  <span>{suggestion.description}</span>
+                </div>
+              );
+            })}
+          </div>
+        </Fragment>
+      )}
+    </PlacesAutocomplete>
   );
 };
 
@@ -85,8 +57,14 @@ const Checkbox = ({ field }) => (
 
 const SearchForm = ({
   geolocation,
+  locations,
   geoLocationRequest,
   addLocationToState,
+  hasRecommendations,
+  toggleSearchBox,
+  fourSquareRequest,
+  searchBoxIsHidden,
+  handleRemoval,
 }) => {
   return (
     <Fragment>
@@ -110,7 +88,7 @@ const SearchForm = ({
           return (
             <Form>
               <Field
-                name="location"
+                name="inputValue"
                 render={({ field, form }) =>
                   renderPlacesAutocomplete({
                     field,
@@ -125,6 +103,7 @@ const SearchForm = ({
                   <IconLocate />
                 </button>
               )}
+              <Locations locations={locations} handleRemoval={handleRemoval} />
               <section className="search__filter">
                 <p>Filter your searches</p>
                 <Field key={generate()} name={'bar'} component={Checkbox} />
@@ -138,6 +117,19 @@ const SearchForm = ({
           );
         }}
       ></Formik>
+      {locations && locations.length > 1 && (
+        <button className="button is-primary" onClick={fourSquareRequest}>
+          Find the best places to eat/drink
+        </button>
+      )}
+      <button
+        className={`search-hide ${
+          !hasRecommendations ? 'search-hide--is-hidden' : null
+        }`}
+        onClick={() => (hasRecommendations ? toggleSearchBox() : null)}
+      >
+        {searchBoxIsHidden ? 'Show form' : 'Hide form'}
+      </button>
     </Fragment>
   );
 };
