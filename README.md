@@ -7,12 +7,34 @@ BITM helps groups of friends find the perfect place to meet for drinks or food b
 - [Create React App](https://github.com/facebook/create-react-app)
 - [Now](https://zeit.co) - Deployment
 
+[![](./src/assets/social.png)](#)
+
 ## To Run
+
+### Environment Variables
+
+You need all of these envirables for the app to run:
+
+`GMAPS` - Google Maps API key for the server
+`FOURSQUARE_API_CLIENT` - Client for Foursquare
+`FOURSQUARE_API_SECRET` - Secret for Foursquare
+
+Ask @omonk for access if you don't have.
+
+### Global Package(s)
 
 Install [`now`](https://github.com/zeit/now) globally.
 
 ```bash
 yarn global add now
+```
+
+then
+
+### Actually running the damn thing
+
+```bash
+now dev --listen 127.0.0.1:8080
 ```
 
 ## Contributing
