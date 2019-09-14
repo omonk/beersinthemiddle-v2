@@ -31,12 +31,8 @@ const setAverageLatLng = payload => ({
 export default ({ types }) => (dispatch, getState) => {
   const { lat, lng } = getLatLngMidPoint(getState());
 
-  const typeQuery = Object.keys(types)
-    .filter(type => types[type])
-    .join(',');
-
   if (lat && lng) {
-    const query = `?lat=${lat}&lng=${lng}&types=${typeQuery}`;
+    const query = `?lat=${lat}&lng=${lng}&types=${types.join(',')}`;
 
     dispatch(setAverageLatLng({ lat, lng }));
     dispatch(recommendationsRequest);

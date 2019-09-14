@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PlacesAutocomplete from 'react-places-autocomplete';
 import PropTypes from 'prop-types';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, FieldArray } from 'formik';
 import IconLocate from '../icons/icon-locate';
 import Locations from '../locations';
 import generate from 'shortid';
@@ -55,12 +55,18 @@ const Checkbox = ({ field }) => (
   </div>
 );
 
+const types = [
+  { name: 'bar', label: 'Bar' },
+  { name: 'club', label: 'Club' },
+  { name: 'pub', label: 'Pub' },
+  { name: 'restaurant', label: 'Restaurant' },
+];
+
 const SearchForm = ({
   geolocation,
   locations,
   geoLocationRequest,
   addLocationToState,
-  hasRecommendations,
   toggleSearchBox,
   fourSquareRequest,
   searchBoxIsHidden,
@@ -81,18 +87,14 @@ const SearchForm = ({
       <Formik
         initialValues={{
           inputValue: '',
-          bar: false,
-          restaurant: true,
+          types: [],
         }}
-        onSubmit={({ bar, restaurant }) => {
+        onSubmit={({ types }) => {
           fourSquareRequest({
-            types: {
-              bar,
-              restaurant,
-            },
+            types,
           });
         }}
-        render={() => {
+        render={({ values }) => {
           return (
             <Form>
               <Field
@@ -118,11 +120,34 @@ const SearchForm = ({
               <Locations locations={locations} handleRemoval={handleRemoval} />
               <section className="search__filter">
                 <p>Filter your searches</p>
-                <Field key={generate()} name={'bar'} component={Checkbox} />
-                <Field
-                  key={generate()}
-                  name={'restaurant'}
-                  component={Checkbox}
+                <FieldArray
+                  name="types"
+                  render={arrayHelpers => (
+                    <>
+                      {types.map(({ name, label }) => {
+                        return (
+                          <div key={label}>
+                            <label className="checkbox">
+                              <input
+                                name="types"
+                                value={name}
+                                checked={values.types.includes(name)}
+                                type="checkbox"
+                                onChange={e => {
+                                  if (e.target.checked) arrayHelpers.push(name);
+                                  else {
+                                    const idx = values.types.indexOf(name);
+                                    arrayHelpers.remove(idx);
+                                  }
+                                }}
+                              />{' '}
+                              {name}
+                            </label>
+                          </div>
+                        );
+                      })}
+                    </>
+                  )}
                 />
               </section>
               <button

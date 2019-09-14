@@ -7,6 +7,14 @@ BITM helps groups of friends find the perfect place to meet for drinks or food b
 - [Create React App](https://github.com/facebook/create-react-app)
 - [Now](https://zeit.co) - Deployment
 
+## To Run
+
+Install [`now`](https://github.com/zeit/now) globally.
+
+```bash
+yarn global add now
+```
+
 ## Contributing
 
 Pull requests and issues are very welcome!
