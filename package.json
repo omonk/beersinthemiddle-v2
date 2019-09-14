@@ -24,7 +24,7 @@
     "prod:start-server": "node ./server/app.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "now": "now -e FOURSQUARE_API_CLIENT=@foursquare_api_client -e FOURSQUARE_API_SECRET=@foursquare_api_secret -e GMAPS=@gmaps"
+    "now:prod": "now --prod -e FOURSQUARE_API_CLIENT=@foursquare_api_client -e FOURSQUARE_API_SECRET=@foursquare_api_secret -e GMAPS=@gmaps"
   },
   "eslintConfig": {
     "extends": "react-app"
