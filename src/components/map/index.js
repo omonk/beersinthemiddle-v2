@@ -24,6 +24,9 @@ class MapContainer extends Component {
         google={google}
         center={{ ...center }}
         zoom={zoom}
+        bootstrapURLKeys={{
+          key: 'AIzaSyC2ZGN-eb5qpshvpy-ukQX1RSpZ3MTU_Ps',
+        }}
         defaultZoom={16}
         onChange={event => {
           if (event.zoom !== zoom) {
