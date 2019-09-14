@@ -1,6 +1,6 @@
 {
   "env": {
-    "GMAPS": "@GMAPS",
+    "GMAPS": "@gmaps",
     "FOURSQUARE_API_SECRET": "@FOURSQUARE_API_SECRET",
     "FOURSQUARE_API_CLIENT": "@FOURSQUARE_API_CLIENT"
   }

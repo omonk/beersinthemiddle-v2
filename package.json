@@ -7,6 +7,7 @@
     "connect-history-api-fallback": "^1.5.0",
     "dotenv": "^8.1.0",
     "express": "^4.16.4",
+    "formik": "^1.5.8",
     "google-map-react": "^1.1.4",
     "google-maps-react": "^2.0.2",
     "lodash.get": "^4.4.2",
@@ -22,7 +23,7 @@
     "prod:start-server": "node ./server/app.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "now": "now -e FOURSQUARE_API_CLIENT=@foursquare_api_client -e FOURSQUARE_API_SECRET=@foursquare_api_secret -e GOOGLE_MAPS_API_KEY=@google_maps_api_key"
+    "now": "now -e FOURSQUARE_API_CLIENT=@foursquare_api_client -e FOURSQUARE_API_SECRET=@foursquare_api_secret -e GMAPS=@gmaps"
   },
   "eslintConfig": {
     "extends": "react-app"
