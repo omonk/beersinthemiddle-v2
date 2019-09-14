@@ -24,7 +24,6 @@ const mapStateToProps = state => {
     hasRecommendations,
     searchBoxIsHidden: ui.searchBoxIsHidden,
   };
-  console.log({ locations });
 
   return foo;
 };

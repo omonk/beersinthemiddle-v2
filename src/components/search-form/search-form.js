@@ -69,14 +69,14 @@ const SearchForm = ({
   return (
     <Fragment>
       <h1 className="title is-hidden-mobile">
-        Beers In The Middle.
+        Beers In The Middle{' '}
         <span role="img" aria-label="beer">
           🍻
         </span>
       </h1>
-      <p className="is-hidden-mobile">
+      <h2 className="is-hidden-mobile">
         Find the most convienient places to hang out with your friends
-      </p>
+      </h2>
       <Formik
         initialValues={{
           inputValue: '',
@@ -113,23 +113,26 @@ const SearchForm = ({
                   component={Checkbox}
                 />
               </section>
+              <button
+                className="button is-primary"
+                disabled={locations.length < 1}
+                onClick={fourSquareRequest}
+              >
+                Find the best places to eat/drink
+              </button>
+
+              <button
+                className={`search-hide ${
+                  !hasRecommendations ? 'search-hide--is-hidden' : null
+                }`}
+                onClick={() => (hasRecommendations ? toggleSearchBox() : null)}
+              >
+                {searchBoxIsHidden ? 'Show form' : 'Hide form'}
+              </button>
             </Form>
           );
         }}
-      ></Formik>
-      {locations && locations.length > 1 && (
-        <button className="button is-primary" onClick={fourSquareRequest}>
-          Find the best places to eat/drink
-        </button>
-      )}
-      <button
-        className={`search-hide ${
-          !hasRecommendations ? 'search-hide--is-hidden' : null
-        }`}
-        onClick={() => (hasRecommendations ? toggleSearchBox() : null)}
-      >
-        {searchBoxIsHidden ? 'Show form' : 'Hide form'}
-      </button>
+      />
     </Fragment>
   );
 };

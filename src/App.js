@@ -3,6 +3,7 @@ import './scss/App.scss';
 
 import { connect } from 'react-redux';
 
+import SEO from './components/SEO';
 import SearchForm from './components/search-form/search-form-container';
 import Map from './components/map';
 import Recommendations from './components/recommendations/recommendations';
@@ -23,6 +24,7 @@ const App = ({
 }) => {
   return (
     <div className="App">
+      <SEO />
       <section
         className={`search ${searchBoxIsHidden ? 'search--is-hidden' : ''}`}
       >
