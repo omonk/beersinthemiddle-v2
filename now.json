@@ -1,4 +1,8 @@
 {
+  "github": {
+    "autoAlias": true,
+    "silent": true
+  },
   "env": {
     "GMAPS": "@gmaps",
     "FOURSQUARE_API_SECRET": "@foursquare_api_secret",

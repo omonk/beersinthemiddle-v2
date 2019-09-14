@@ -1,18 +1,14 @@
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import randomColor from 'randomcolor';
 import { setMapCenterFromLatestLocations } from './map';
 export const ADD_LOCATION = 'ADD_LOCATION';
 export const ADD_LOCATION_SUCCESS = 'ADD_LOCATION_SUCCESS';
 export const ADD_LOCATION_ERROR = 'ADD_LOCATION_ERROR';
 export const REMOVE_LOCATION = 'REMOVE_LOCATION';
 
-const addLocationSuccess = ({ address, lat, lng, placeId }) => ({
+const addLocationSuccess = payload => ({
   type: ADD_LOCATION_SUCCESS,
-  payload: {
-    address,
-    lat,
-    lng,
-    placeId,
-  },
+  payload,
 });
 
 const addLocationError = payload => ({
@@ -29,14 +25,17 @@ export const addLocationFromGeoLocation = pos => (dispatch, getState) => {
   })
     .then(res => res.json())
     .then(res => {
-      dispatch(
-        addLocationSuccess({
+      console.log(randomColor());
+      dispatch({
+        type: ADD_LOCATION_SUCCESS,
+        payload: {
           address: res.address,
           lat: latitude,
           lng: longitude,
           placeId: res.placeId,
-        })
-      );
+          color: randomColor(),
+        },
+      });
       dispatch(
         setMapCenterFromLatestLocations({ lat: latitude, lng: longitude })
       );

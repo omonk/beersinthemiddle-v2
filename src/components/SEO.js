@@ -9,7 +9,7 @@ const data = {
   siteUrl: 'https://beersinthemiddle.com',
 };
 
-const SEO = ({}) => (
+const SEO = () => (
   <Helmet>
     <meta property="og:image" content={socialImage} />
     <meta property="og:type" content="website" />

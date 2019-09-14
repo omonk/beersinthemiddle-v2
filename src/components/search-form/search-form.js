@@ -49,7 +49,7 @@ const renderPlacesAutocomplete = ({ field, form, addLocationToState }) => {
 
 const Checkbox = ({ field }) => (
   <div>
-    <label class="checkbox">
+    <label className="checkbox">
       <input {...field} checked={field.value} type="checkbox" /> {field.name}
     </label>
   </div>
@@ -114,25 +114,20 @@ const SearchForm = ({
                 />
               </section>
               <button
+                type="submit"
                 className="button is-primary"
                 disabled={locations.length < 1}
                 onClick={fourSquareRequest}
               >
                 Find the best places to eat/drink
               </button>
-
-              <button
-                className={`search-hide ${
-                  !hasRecommendations ? 'search-hide--is-hidden' : null
-                }`}
-                onClick={() => (hasRecommendations ? toggleSearchBox() : null)}
-              >
-                {searchBoxIsHidden ? 'Show form' : 'Hide form'}
-              </button>
             </Form>
           );
         }}
       />
+      <button className={`search-hide`} onClick={() => toggleSearchBox()}>
+        {searchBoxIsHidden ? 'Show form' : 'Hide form'}
+      </button>
     </Fragment>
   );
 };

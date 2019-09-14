@@ -14,7 +14,7 @@ const mapStateToProps = state => {
   const { locations, geolocation, recommendations, map, ui } = state;
 
   const hasRecommendations = hasRecommendationsSelector(state);
-  const foo = {
+  return {
     geolocation,
     locations,
     center: map.center,
@@ -24,8 +24,6 @@ const mapStateToProps = state => {
     hasRecommendations,
     searchBoxIsHidden: ui.searchBoxIsHidden,
   };
-
-  return foo;
 };
 
 const mapDispatchToProps = (dispatch, state) => {

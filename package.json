@@ -1,33 +1,12 @@
 {
-  "name": "beersinthemiddle-v3",
+  "name": "beersinthemiddle-v2",
   "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "body-parser": "^1.18.3",
-    "connect-history-api-fallback": "^1.5.0",
-    "dotenv": "^8.1.0",
-    "express": "^4.16.4",
-    "formik": "^1.5.8",
-    "google-map-react": "^1.1.4",
-    "google-maps-react": "^2.0.2",
-    "lodash.get": "^4.4.2",
-    "mathjs": "^6.2.1",
-    "moment": "^2.22.2",
-    "moment-duration-format": "^2.2.2",
-    "moment-timezone": "^0.5.23",
-    "react-helmet": "^5.2.1"
-  },
   "scripts": {
-    "dev": "react-scripts start",
     "build": "react-scripts build",
-    "start-server": "nodemon ./server/app.js",
-    "prod:start-server": "node ./server/app.js",
-    "test": "react-scripts test",
+    "dev": "react-scripts start",
     "eject": "react-scripts eject",
-    "now:prod": "now --prod -e FOURSQUARE_API_CLIENT=@foursquare_api_client -e FOURSQUARE_API_SECRET=@foursquare_api_secret -e GMAPS=@gmaps"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
+    "now:prod": "now --prod -e FOURSQUARE_API_CLIENT=@foursquare_api_client -e FOURSQUARE_API_SECRET=@foursquare_api_secret -e GMAPS=@gmaps",
+    "test": "react-scripts test"
   },
   "browserslist": [
     ">0.2%",
@@ -35,19 +14,31 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "proxy": "http://localhost:4000",
-  "devDependencies": {
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "dependencies": {
     "@google/maps": "^1.0.0",
     "bulma": "^0.7.2",
     "classnames": "^2.2.6",
+    "connect-history-api-fallback": "^1.5.0",
     "connected-react-router": "^6.5.2",
+    "dotenv": "^8.1.0",
+    "formik": "^1.5.8",
+    "google-map-react": "^1.1.4",
     "history": "^4.7.2",
+    "lodash.get": "^4.4.2",
+    "mathjs": "^6.2.1",
+    "moment": "^2.22.2",
+    "moment-duration-format": "^2.2.2",
+    "moment-timezone": "^0.5.23",
     "node-fetch": "^2.2.0",
     "node-sass": "^4.9.4",
-    "nodemon": "^1.18.4",
     "prop-types": "^15.6.2",
+    "randomcolor": "^0.5.4",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
+    "react-helmet": "^5.2.1",
     "react-places-autocomplete": "^7.2.0",
     "react-redux": "^7.1.1",
     "react-router-dom": "^5.0.1",
@@ -57,5 +48,6 @@
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
     "shortid": "^2.2.13"
-  }
+  },
+  "devDependencies": {},
 }
