@@ -8,7 +8,10 @@ import SearchForm from './components/search-form/search-form-container';
 import Map from './components/map';
 import Recommendations from './components/recommendations/recommendations';
 
-import { updateMapZoomValue } from './redux/actions/map';
+import {
+  updateMapZoomValue,
+  centerMapToRecommendation,
+} from './redux/actions/map';
 import { hasRecommendationsSelector } from './redux/selectors/recommendations/recommendations';
 
 const App = ({
@@ -78,6 +81,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch, state) => {
   return {
     updateMapZoomValue: zoom => dispatch(updateMapZoomValue(zoom)),
+    centerMapToRecommendation: (lat, lng) =>
+      dispatch(centerMapToRecommendation(lat, lng)),
   };
 };
 

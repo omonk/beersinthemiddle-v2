@@ -7,6 +7,7 @@ export const FOUR_SQUARE_REQUEST = 'FOUR_SQUARE_REQUEST';
 export const FOUR_SQUARE_REQUEST_SUCCESS = 'FOUR_SQUARE_REQUEST_SUCCESS';
 export const FOUR_SQUARE_REQUEST_ERROR = 'FOUR_SQUARE_REQUEST_ERROR';
 export const SET_AVERAGE_LAT_LNG = 'SET_AVERAGE_LAT_LNG';
+export const SET_RECOMMENDATIONS_LOADING = 'SET_RECOMMENDATIONS_LOADING';
 
 const recommendationsRequest = () => ({
   type: FOUR_SQUARE_REQUEST,
@@ -33,6 +34,9 @@ export default () => (dispatch, getState) => {
   if (lat && lng) {
     dispatch(setAverageLatLng({ lat, lng }));
     dispatch(recommendationsRequest);
+    dispatch({
+      type: SET_RECOMMENDATIONS_LOADING,
+    });
     dispatch(push(`/search?lat=${lat}&lng=${lng}`));
 
     fetch(`/api/foursquare?lat=${lat}&lng=${lng}`, {
@@ -43,11 +47,17 @@ export default () => (dispatch, getState) => {
     })
       .then(res => res.json())
       .then(res => {
-        dispatch(setMapCenterFromLatestLocations({ lat, lng }, 16));
+        dispatch(setMapCenterFromLatestLocations({ lat, lng }, 12));
         dispatch(recommendationsSuccess(res));
+        dispatch({
+          type: SET_RECOMMENDATIONS_LOADING,
+        });
         dispatch(toggleSearchBoxHidden);
       })
       .catch(err => {
+        dispatch({
+          type: SET_RECOMMENDATIONS_LOADING,
+        });
         dispatch(recommendationsError(err));
       });
   }

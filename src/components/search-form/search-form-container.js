@@ -17,6 +17,7 @@ const mapStateToProps = state => {
   return {
     geolocation,
     locations,
+    isLoading: ui.recommendationsLoading,
     center: map.center,
     zoom: map.zoom,
     locationsMidPoint: map.locationsMidPoint,

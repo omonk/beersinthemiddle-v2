@@ -65,6 +65,7 @@ const SearchForm = ({
   fourSquareRequest,
   searchBoxIsHidden,
   handleRemoval,
+  isLoading,
 }) => {
   return (
     <Fragment>
@@ -98,7 +99,11 @@ const SearchForm = ({
                 }
               />
               {!!geolocation && (!geolocation.lat && !geolocation.lng) && (
-                <button className="button" onClick={geoLocationRequest}>
+                <button
+                  className="button"
+                  type="button"
+                  onClick={geoLocationRequest}
+                >
                   <span className="is-hidden-mobile">Add current location</span>
                   <IconLocate />
                 </button>
@@ -115,8 +120,8 @@ const SearchForm = ({
               </section>
               <button
                 type="submit"
-                className="button is-primary"
-                disabled={locations.length < 1}
+                className={`button is-primary ${isLoading ? 'is-loading' : ''}`}
+                disabled={locations.length < 2}
                 onClick={fourSquareRequest}
               >
                 Find the best places to eat/drink
@@ -125,7 +130,10 @@ const SearchForm = ({
           );
         }}
       />
-      <button className={`search-hide`} onClick={() => toggleSearchBox()}>
+      <button
+        className={`button is-small is-fullwidth is-info search-hide`}
+        onClick={() => toggleSearchBox()}
+      >
         {searchBoxIsHidden ? 'Show form' : 'Hide form'}
       </button>
     </Fragment>

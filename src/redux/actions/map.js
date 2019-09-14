@@ -15,7 +15,7 @@ export const mapCenterLoadingFinished = {
   type: MAP_CENTER_LOADING_FINISHED,
 };
 
-export const setMapCenterFromLatestLocations = (coords, zoom = undefined) => ({
+export const setMapCenterFromLatestLocations = (coords, zoom = 17) => ({
   type: MAP_CENTER_FROM_LATEST_LOCATION,
   payload: { ...coords, zoom },
 });

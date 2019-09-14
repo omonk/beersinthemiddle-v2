@@ -49,5 +49,5 @@
     "reselect": "^4.0.0",
     "shortid": "^2.2.13"
   },
-  "devDependencies": {},
+  "devDependencies": {}
 }

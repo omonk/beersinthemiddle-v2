@@ -37,7 +37,11 @@ export const addLocationFromGeoLocation = pos => (dispatch, getState) => {
         },
       });
       dispatch(
-        setMapCenterFromLatestLocations({ lat: latitude, lng: longitude })
+        setMapCenterFromLatestLocations({
+          lat: latitude,
+          lng: longitude,
+          zoom: 12,
+        })
       );
     });
 };
