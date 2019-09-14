@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
+import GoogleMapReact from 'google-map-react';
 import PropTypes from 'prop-types';
 import { generate } from 'shortid';
 
@@ -20,7 +20,7 @@ class MapContainer extends Component {
       google,
     } = this.props;
     return (
-      <Map
+      <GoogleMapReact
         google={google}
         center={{ ...center }}
         zoom={zoom}
@@ -30,10 +30,7 @@ class MapContainer extends Component {
             updateMapZoomValue(event.zoom);
           }
         }}
-        bootstrapURLKeys={{
-          key: 'AIzaSyDG__8gKSiqXL2IG1ji5CCUNigEVSU3E0c',
-          language: 'en',
-        }}
+        bootstrapURLKeys={{ key: '' }}
       >
         {locationsMidPoint &&
           locationsMidPoint.lat &&
@@ -68,17 +65,15 @@ class MapContainer extends Component {
               index={index}
             />
           ))}
-      </Map>
+      </GoogleMapReact>
     );
   }
 }
 
-Map.propTypes = {
+MapContainer.propTypes = {
   locations: PropTypes.array.isRequired,
   locationsMidPoint: PropTypes.object,
   center: PropTypes.object.isRequired,
 };
 
-export default GoogleApiWrapper({
-  apiKey: 'AIzaSyDG__8gKSiqXL2IG1ji5CCUNigEVSU3E0c',
-})(MapContainer);
+export default MapContainer;
