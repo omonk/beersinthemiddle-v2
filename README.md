@@ -7,7 +7,7 @@ BITM helps groups of friends find the perfect place to meet for drinks or food b
 - [Create React App](https://github.com/facebook/create-react-app)
 - [Now](https://zeit.co) - Deployment and lambdas
 
-[![](./src/assets/social.png)](#)
+[![](./public/social.png)](#)
 
 ## To Run
 
