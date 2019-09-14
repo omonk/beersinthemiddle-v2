@@ -1,7 +1,7 @@
 {
   "env": {
     "GMAPS": "@gmaps",
-    "FOURSQUARE_API_SECRET": "@FOURSQUARE_API_SECRET",
-    "FOURSQUARE_API_CLIENT": "@FOURSQUARE_API_CLIENT"
+    "FOURSQUARE_API_SECRET": "@foursquare_api_secret",
+    "FOURSQUARE_API_CLIENT": "@foursquare_api_client"
   }
 }
