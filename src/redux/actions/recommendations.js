@@ -28,18 +28,24 @@ const setAverageLatLng = payload => ({
   payload,
 });
 
-export default () => (dispatch, getState) => {
+export default ({ types }) => (dispatch, getState) => {
   const { lat, lng } = getLatLngMidPoint(getState());
 
+  const typeQuery = Object.keys(types)
+    .filter(type => types[type])
+    .join(',');
+
   if (lat && lng) {
+    const query = `?lat=${lat}&lng=${lng}&types=${typeQuery}`;
+
     dispatch(setAverageLatLng({ lat, lng }));
     dispatch(recommendationsRequest);
     dispatch({
       type: SET_RECOMMENDATIONS_LOADING,
     });
-    dispatch(push(`/search?lat=${lat}&lng=${lng}`));
+    dispatch(push(`/search${query}`));
 
-    fetch(`/api/foursquare?lat=${lat}&lng=${lng}`, {
+    fetch(`/api/foursquare${query}`, {
       method: 'get',
       headers: {
         'Content-Type': 'application/json',

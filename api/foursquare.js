@@ -12,13 +12,14 @@ const fourSquareCredentials = `client_id=${process.env.FOURSQUARE_API_CLIENT}&cl
 
 const fourSquareBaseUrl = 'https://api.foursquare.com/v2';
 
-const getVenueExploreParams = ({ lat, lng }, section = 'drinks') =>
-  `?ll=${lat},${lng}&${fourSquareCredentials}&v=20170509&section=${section}&sortByDistance=1&limit=15`;
+const getVenueExploreParams = ({ lat, lng, types }, section = 'drinks') =>
+  `?ll=${lat},${lng}&query=${types}&${fourSquareCredentials}&v=20170509&section=${section}&sortByDistance=1&limit=15`;
 
-const getFourSquareRecommendations = ({ lat, lng }) => {
+const getFourSquareRecommendations = ({ lat, lng, types }) => {
   const url = `${fourSquareBaseUrl}/venues/explore${getVenueExploreParams({
     lat,
     lng,
+    types,
   })}`;
 
   return fetch(url, fetchOptions).then(res => res.json());
@@ -59,16 +60,13 @@ const getVenueDetails = ({ response }) => {
 };
 
 module.exports = (req, res) => {
-  const { lat, lng } = req.query;
-  return getFourSquareRecommendations({ lat, lng })
-    .then(res => {
-      console.log(JSON.stringify({ res }, null, 2));
-      return Promise.all(getVenueDetails(res));
-    })
+  const { lat, lng, types } = req.query;
+  console.log({ types });
+  return getFourSquareRecommendations({ lat, lng, types })
+    .then(res => Promise.all(getVenueDetails(res)))
     .then(formatFourSquareResponse)
     .then(response => res.send(response))
     .catch(err => {
-      console.log({ err });
       res.status(500).json({ error: err.toString() });
     });
 };

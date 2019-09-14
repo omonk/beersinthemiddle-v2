@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import generate from 'shortid';
 // const Recommendation = ({ data, centerMapToRecommendation }) => {
 class Recommendation extends Component {
   constructor(props) {
@@ -12,7 +12,7 @@ class Recommendation extends Component {
     const { data, centerMapToRecommendation } = this.props;
     const { lat, lng } = data.location;
     return (
-      <div className="recommendation-box content box">
+      <div className="recommendation-box">
         <h3 className="title is-5">{data.title}</h3>
         {data.categories && <p>{data.categories.join(', ')}</p>}
         <div
@@ -24,7 +24,7 @@ class Recommendation extends Component {
             <address>
               {data.location.address.map((line, index, arr) => {
                 return (
-                  <p style={{ marginBottom: '0px' }}>
+                  <p key={generate()} style={{ marginBottom: '0px' }}>
                     {line}
                     {index < arr.length - 1 ? ',' : null}
                   </p>
@@ -33,18 +33,24 @@ class Recommendation extends Component {
             </address>
           )}
         </div>
-        <button
-          className="button is-primary"
-          onClick={() => centerMapToRecommendation({ lat, lng })}
-        >
-          Show on map
-        </button>
-        <button
-          className="button is-primary"
-          onClick={() => this.setState({ isOpen: !this.state.isOpen })}
-        >
-          Show details
-        </button>
+        <div className="field is-grouped">
+          <p className="control">
+            <button
+              className="button is-primary"
+              onClick={() => centerMapToRecommendation({ lat, lng })}
+            >
+              Show on map
+            </button>
+          </p>
+          <p className="control">
+            <button
+              className="button is-primary"
+              onClick={() => this.setState({ isOpen: !this.state.isOpen })}
+            >
+              Show details
+            </button>
+          </p>
+        </div>
       </div>
     );
   }

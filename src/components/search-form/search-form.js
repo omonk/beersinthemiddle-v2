@@ -84,7 +84,14 @@ const SearchForm = ({
           bar: false,
           restaurant: true,
         }}
-        onSubmit={values => geoLocationRequest(values)}
+        onSubmit={({ bar, restaurant }) => {
+          fourSquareRequest({
+            types: {
+              bar,
+              restaurant,
+            },
+          });
+        }}
         render={() => {
           return (
             <Form>
@@ -122,7 +129,6 @@ const SearchForm = ({
                 type="submit"
                 className={`button is-primary ${isLoading ? 'is-loading' : ''}`}
                 disabled={locations.length < 2}
-                onClick={fourSquareRequest}
               >
                 Find the best places to eat/drink
               </button>

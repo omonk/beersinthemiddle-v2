@@ -34,7 +34,7 @@ const mapDispatchToProps = (dispatch, state) => {
       dispatch(addLocation({ address, placeId }));
     },
     handleRemoval: placeId => dispatch(removeLocation(placeId)),
-    fourSquareRequest: () => dispatch(getRecommendations()),
+    fourSquareRequest: values => dispatch(getRecommendations(values)),
     toggleSearchBox: () => dispatch(toggleSearchBoxHidden),
   };
 };

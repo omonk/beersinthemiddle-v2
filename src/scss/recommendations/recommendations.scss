@@ -18,6 +18,10 @@ $scale: 0.75;
 }
 
 .recommendation-box {
+  background: white;
+  border: 1px solid $grey-light;
+  border-radius: 5px;
+  box-shadow: 0px 5px 6px rgba(0, 0, 0, 0.2);
   padding: 1rem;
   margin-right: 1rem;
   flex: 1 0 25%;
