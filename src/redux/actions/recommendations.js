@@ -33,9 +33,9 @@ export default () => (dispatch, getState) => {
   if (lat && lng) {
     dispatch(setAverageLatLng({ lat, lng }));
     dispatch(recommendationsRequest);
-    dispatch(push(`/search?ll=${lat},${lng}`));
+    dispatch(push(`/search?lat=${lat}&lng=${lng}`));
 
-    fetch(`/api/foursquare?ll=${lat},${lng}`, {
+    fetch(`/api/foursquare?lat=${lat}&lng=${lng}`, {
       method: 'get',
       headers: {
         'Content-Type': 'application/json',

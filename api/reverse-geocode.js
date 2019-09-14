@@ -3,6 +3,7 @@ const googleMapsClient = require('@google/maps').createClient({
   Promise: Promise,
 });
 
+console.log({ p: process.env.GMAPS });
 module.exports = (req, res) => {
   const { lat, lng } = req.query;
 

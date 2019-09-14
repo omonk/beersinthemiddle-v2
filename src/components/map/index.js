@@ -30,7 +30,6 @@ class MapContainer extends Component {
             updateMapZoomValue(event.zoom);
           }
         }}
-        bootstrapURLKeys={{ key: '' }}
       >
         {locationsMidPoint &&
           locationsMidPoint.lat &&
