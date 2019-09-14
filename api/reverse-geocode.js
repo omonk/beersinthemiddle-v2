@@ -1,5 +1,5 @@
 const googleMapsClient = require('@google/maps').createClient({
-  key: process.env.GOOGLE_MAPS_API_KEY,
+  key: process.env.GMAPS,
   Promise: Promise,
 });
 
@@ -21,8 +21,8 @@ module.exports = (req, res) => {
       res.send(JSON.stringify({ address, placeId }));
     })
     .catch(err => {
-      if (err === 'timeout') {
-        res.send('timeout');
-      }
+      console.log(JSON.stringify({ err }, null, 2));
+      res.status(404);
+      res.send(err);
     });
 };

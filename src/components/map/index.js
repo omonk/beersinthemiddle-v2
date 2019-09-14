@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import GoogleMapReact from 'google-map-react';
+import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 import PropTypes from 'prop-types';
 import { generate } from 'shortid';
 
@@ -8,9 +8,7 @@ import LocationMarker from './components/locationMarker';
 import LocationMidPointMarker from './components/locationMidPointMarker';
 import RecommendationsMarker from './components/recommendationsMarker';
 
-const { GMAPS_API_KEY } = process.env;
-
-class Map extends Component {
+class MapContainer extends Component {
   render() {
     const {
       zoom,
@@ -19,9 +17,11 @@ class Map extends Component {
       recommendations,
       updateMapZoomValue,
       center,
+      google,
     } = this.props;
     return (
-      <GoogleMapReact
+      <Map
+        google={google}
         center={{ ...center }}
         zoom={zoom}
         defaultZoom={16}
@@ -31,7 +31,7 @@ class Map extends Component {
           }
         }}
         bootstrapURLKeys={{
-          key: GMAPS_API_KEY,
+          key: 'AIzaSyDG__8gKSiqXL2IG1ji5CCUNigEVSU3E0c',
           language: 'en',
         }}
       >
@@ -68,7 +68,7 @@ class Map extends Component {
               index={index}
             />
           ))}
-      </GoogleMapReact>
+      </Map>
     );
   }
 }
@@ -79,4 +79,6 @@ Map.propTypes = {
   center: PropTypes.object.isRequired,
 };
 
-export default Map;
+export default GoogleApiWrapper({
+  apiKey: 'AIzaSyDG__8gKSiqXL2IG1ji5CCUNigEVSU3E0c',
+})(MapContainer);
