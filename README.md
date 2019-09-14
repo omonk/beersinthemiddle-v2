@@ -5,7 +5,7 @@ BITM helps groups of friends find the perfect place to meet for drinks or food b
 ## Built With
 
 - [Create React App](https://github.com/facebook/create-react-app)
-- [Now](https://zeit.co) - Deployment
+- [Now](https://zeit.co) - Deployment and lambdas
 
 [![](./src/assets/social.png)](#)
 
@@ -16,7 +16,9 @@ BITM helps groups of friends find the perfect place to meet for drinks or food b
 You need all of these envirables for the app to run:
 
 `GMAPS` - Google Maps API key for the server
+
 `FOURSQUARE_API_CLIENT` - Client for Foursquare
+
 `FOURSQUARE_API_SECRET` - Secret for Foursquare
 
 Ask @omonk for access if you don't have.
