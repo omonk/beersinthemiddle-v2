@@ -9,15 +9,16 @@ import * as serviceWorker from './serviceWorker';
 
 const store = configureStore();
 
-const render = Component =>
+const render = Component => {
   ReactDOM.render(
     <Provider store={store}>
       <ConnectedRouter history={history}>
         <Component />
       </ConnectedRouter>
     </Provider>,
-    document.getElementById('root')
+    document.getElementById('root'),
   );
+};
 
 render(App);
 

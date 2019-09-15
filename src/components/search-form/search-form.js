@@ -3,6 +3,7 @@ import PlacesAutocomplete from 'react-places-autocomplete';
 import PropTypes from 'prop-types';
 import { Formik, Form, Field, FieldArray } from 'formik';
 import { faMapPin } from '@fortawesome/free-solid-svg-icons';
+import generate from 'shortid';
 import Locations from '../locations';
 import Icon from '../common/icon';
 
@@ -32,10 +33,7 @@ const renderPlacesAutocomplete = ({ field, form, addLocationToState }) => {
             {loading && <div>Loading...</div>}
             {suggestions.map(suggestion => {
               return (
-                <div
-                  className="suggestion"
-                  {...getSuggestionItemProps(suggestion, {})}
-                >
+                <div key={generate()} className="suggestion" {...getSuggestionItemProps(suggestion, {})}>
                   <span>{suggestion.description}</span>
                 </div>
               );
@@ -74,20 +72,11 @@ const SearchForm = ({
           🍻
         </span>
       </h1>
-      <h2 className="is-hidden-mobile">
-        Find the most convienient places to hang out with your friends
-      </h2>
+      <h2 className="is-hidden-mobile">Find the most convienient places to hang out with your friends</h2>
       <Formik
         initialValues={{
           inputValue: '',
-          types: types
-            .filter(({ checkedOnLoad: i }) => i)
-            .map(({ name }) => name),
-        }}
-        onSubmit={({ types }) => {
-          fourSquareRequest({
-            types,
-          });
+          types: types.filter(({ checkedOnLoad: i }) => i).map(({ name }) => name),
         }}
         render={({ values }) => {
           return (
@@ -162,9 +151,15 @@ const SearchForm = ({
             </Form>
           );
         }}
+        onSubmit={({ types }) => {
+          fourSquareRequest({
+            types,
+          });
+        }}
       />
       <button
-        className={`button is-small is-fullwidth is-info search-hide`}
+        type="button"
+        className="button is-small is-fullwidth is-info search-hide"
         onClick={() => toggleSearchBox()}
       >
         {searchBoxIsHidden ? 'Show form' : 'Hide form'}
@@ -176,7 +171,6 @@ const SearchForm = ({
 SearchForm.propTypes = {
   addLocationToState: PropTypes.func.isRequired,
   geoLocationRequest: PropTypes.func.isRequired,
-  geolocation: PropTypes.object.isRequired,
 };
 
 export default SearchForm;

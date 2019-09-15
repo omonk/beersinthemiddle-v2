@@ -96,9 +96,7 @@ const getTravelTimes = response => {
     const leg = get(directions, 'routes[0].legs[0]', undefined);
     return {
       duration: leg.duration.value,
-      durationFormatted: moment
-        .duration(leg.duration.value, 'seconds')
-        .format('h [hrs], m [min]'),
+      durationFormatted: moment.duration(leg.duration.value, 'seconds').format('h [hrs], m [min]'),
       lat: leg.start_location.lat,
       lng: leg.start_location.lng,
       distanceToMidPoint: leg.distance.value,
@@ -116,6 +114,7 @@ const validateTimes = journeys => {
     if (curr.duration > upperBound) {
       return acc.concat([{ ...curr }]);
     }
+
     return acc;
   }, []);
 
@@ -125,9 +124,7 @@ const validateTimes = journeys => {
 const fetchTravelTimes = (locations, midPoint) => {
   const destination = Object.values(midPoint).join(',');
   return locations.map(location => {
-    const params = `origin=${Object.values(location).join(
-      ','
-    )}&destination=${destination}`;
+    const params = `origin=${Object.values(location).join(',')}&destination=${destination}`;
     return fetch(gmapsUrl(params))
       .then(res => res.json())
       .then(res => ({
@@ -148,24 +145,16 @@ const getTimings = (locations, midPoint) =>
       if (!journeys) {
         throw new Error(`Journeys missing`);
       }
+
       if (journeys && journeys.anomaly.length) {
         console.log(
           journeys.journeys.map(journey => journey.durationFormatted),
-          journeys.anomaly.map(journey => journey.durationFormatted)
+          journeys.anomaly.map(journey => journey.durationFormatted),
         );
-        const {
-          lat: anomalyLat,
-          lng: anomalyLng,
-          distanceToMidPoint,
-        } = journeys.anomaly[0];
+        const { lat: anomalyLat, lng: anomalyLng, distanceToMidPoint } = journeys.anomaly[0];
         const { lat: midPointLat, lng: midPointLng } = midPoint;
 
-        const bearingMidPointToAnomaly = calculateBearing(
-          midPointLat,
-          midPointLng,
-          anomalyLat,
-          anomalyLng
-        );
+        const bearingMidPointToAnomaly = calculateBearing(midPointLat, midPointLng, anomalyLat, anomalyLng);
 
         // Using this new midpoint we can recalculate the travel times to try
         // and make sure the travel distances are standadised for most locations🤞🏼
@@ -173,7 +162,7 @@ const getTimings = (locations, midPoint) =>
           midPointLat,
           midPointLng,
           bearingMidPointToAnomaly,
-          (distanceToMidPoint / 100) * 30 // Move towards anomaly x%
+          (distanceToMidPoint / 100) * 30, // Move towards anomaly x%
         );
 
         return getTimings(locations, newMidPoint);

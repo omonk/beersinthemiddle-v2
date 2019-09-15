@@ -15,6 +15,8 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
+  const { lat, lng, zoom } = action.payload;
+
   switch (action.type) {
     case MAP_CENTER_LOADING:
       return {
@@ -38,7 +40,6 @@ export default (state = initialState, action) => {
       };
     case MAP_CENTER_FROM_RECOMMENDATION_COORDS:
     case MAP_CENTER_FROM_LATEST_LOCATION:
-      const { lat, lng, zoom } = action.payload;
       return {
         center: { lat, lng },
         zoom: zoom ? zoom : state.zoom,

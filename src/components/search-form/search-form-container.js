@@ -10,10 +10,11 @@ import { toggleSearchBoxHidden } from '../../redux/actions/ui';
 const SearchFormContainer = props => {
   return <SearchForm {...props} />;
 };
+
 const mapStateToProps = state => {
   const { locations, geolocation, recommendations, map, ui } = state;
-
   const hasRecommendations = hasRecommendationsSelector(state);
+
   return {
     geolocation,
     locations,
@@ -43,5 +44,5 @@ const mapDispatchToProps = (dispatch, state) => {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(SearchFormContainer);

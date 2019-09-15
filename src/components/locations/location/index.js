@@ -7,7 +7,7 @@ const Location = ({ data: { address, placeId, color }, handleRemoval }) => (
   <li className="location-list-item">
     <Icon icon={faMapMarker} size="small" color={color} />
     <p>{address}</p>
-    <button className="delete" onClick={() => handleRemoval(placeId)} />
+    <button className="delete" type="button" onClick={() => handleRemoval(placeId)} />
   </li>
 );
 

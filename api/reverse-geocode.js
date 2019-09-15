@@ -1,6 +1,6 @@
 const googleMapsClient = require('@google/maps').createClient({
   key: process.env.GMAPS,
-  Promise: Promise,
+  Promise,
 });
 
 module.exports = (req, res) => {
