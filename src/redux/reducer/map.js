@@ -15,7 +15,7 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-  const { lat, lng, zoom } = action.payload;
+  const { lat, lng, zoom } = action.payload || {};
 
   switch (action.type) {
     case MAP_CENTER_LOADING:

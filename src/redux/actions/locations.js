@@ -6,6 +6,11 @@ export const ADD_LOCATION_SUCCESS = 'ADD_LOCATION_SUCCESS';
 export const ADD_LOCATION_ERROR = 'ADD_LOCATION_ERROR';
 export const REMOVE_LOCATION = 'REMOVE_LOCATION';
 
+const createColor = (luminosity = 'dark') =>
+  randomColor({
+    luminosity,
+  });
+
 const addLocationSuccess = payload => {
   return {
     type: ADD_LOCATION_SUCCESS,
@@ -22,9 +27,7 @@ export const addLocationFromGeoLocation = pos => (dispatch, getState) => {
   const { longitude, latitude } = pos.coords;
   const { locations } = getState();
 
-  const hasLocationAlready = locations.some(
-    ({ lat, lng }) => lat === latitude && lng === longitude
-  );
+  const hasLocationAlready = locations.some(({ lat, lng }) => lat === latitude && lng === longitude);
 
   return hasLocationAlready
     ? null
@@ -42,7 +45,7 @@ export const addLocationFromGeoLocation = pos => (dispatch, getState) => {
               lat: latitude,
               lng: longitude,
               placeId: res.placeId,
-              color: randomColor(),
+              color: createColor(),
             },
           });
           dispatch(
@@ -50,7 +53,7 @@ export const addLocationFromGeoLocation = pos => (dispatch, getState) => {
               lat: latitude,
               lng: longitude,
               zoom: 12,
-            })
+            }),
           );
         });
 };
@@ -60,9 +63,7 @@ export const addLocation = ({ address, placeId }) => (dispatch, getState) => {
     .then(results => getLatLng(results[0]))
     .then(({ lat, lng }) => {
       dispatch(setMapCenterFromLatestLocations({ lat, lng }));
-      dispatch(
-        addLocationSuccess({ address, lat, lng, placeId, color: randomColor() })
-      );
+      dispatch(addLocationSuccess({ address, lat, lng, placeId, color: createColor() }));
     })
     .catch(err => dispatch(addLocationError(err)));
 };
