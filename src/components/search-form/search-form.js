@@ -2,8 +2,9 @@ import React, { Fragment } from 'react';
 import PlacesAutocomplete from 'react-places-autocomplete';
 import PropTypes from 'prop-types';
 import { Formik, Form, Field, FieldArray } from 'formik';
-import IconLocate from '../icons/icon-locate';
+import { faMapPin } from '@fortawesome/free-solid-svg-icons';
 import Locations from '../locations';
+import Icon from '../common/icon';
 
 const renderPlacesAutocomplete = ({ field, form, addLocationToState }) => {
   return (
@@ -99,16 +100,15 @@ const SearchForm = ({
                   })
                 }
               />
-
               <button
                 className={`button ${isGeoLocating ? 'is-loading' : ''}`}
                 type="button"
                 onClick={geoLocationRequest}
               >
                 <span className="is-hidden-mobile">Add current location</span>
-                <IconLocate />
-              </button>
 
+                <Icon icon={faMapPin} size="medium" />
+              </button>
               {isGeoLocatingError && (
                 <p className="has-text-danger">
                   Hmm... we seem to have an issue locating you{' '}
@@ -117,7 +117,6 @@ const SearchForm = ({
                   </span>
                 </p>
               )}
-
               <Locations locations={locations} handleRemoval={handleRemoval} />
               <section className="search__filter">
                 <p>Filter your searches</p>

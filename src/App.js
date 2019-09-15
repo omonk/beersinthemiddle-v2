@@ -12,6 +12,9 @@ import {
   centerMapToRecommendation,
 } from './redux/actions/map';
 import { hasRecommendationsSelector } from './redux/selectors/recommendations/recommendations';
+import iconLibrary from './utils/icons';
+
+iconLibrary();
 
 const App = ({
   locations,

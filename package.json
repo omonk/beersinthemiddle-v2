@@ -20,6 +20,10 @@
     "extends": "react-app"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.22",
+    "@fortawesome/free-brands-svg-icons": "^5.10.2",
+    "@fortawesome/free-solid-svg-icons": "^5.10.2",
+    "@fortawesome/react-fontawesome": "^0.1.4",
     "@google/maps": "^1.0.0",
     "bulma": "^0.7.2",
     "classnames": "^2.2.6",
