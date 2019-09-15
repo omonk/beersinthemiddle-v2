@@ -41,6 +41,7 @@ export default (state = initialState, action) => {
     case MAP_CENTER_FROM_RECOMMENDATION_COORDS:
     case MAP_CENTER_FROM_LATEST_LOCATION:
       return {
+        ...state,
         center: { lat, lng },
         zoom: zoom ? zoom : state.zoom,
       };

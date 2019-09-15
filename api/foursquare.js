@@ -1,5 +1,6 @@
 const fetch = require('node-fetch');
 const { get } = require('lodash');
+const { URL } = require('url');
 
 const fetchOptions = {
   headers: {
@@ -16,17 +17,19 @@ const getVenueExploreParams = ({ lat, lng, types }, section = 'drinks') =>
   `?ll=${lat},${lng}&query=${types}&${fourSquareCredentials}&v=20170509&section=${section}&sortByDistance=1&limit=15`;
 
 const getFourSquareRecommendations = ({ lat, lng, types }) => {
-  const url = `${fourSquareBaseUrl}/venues/explore${getVenueExploreParams({
-    lat,
-    lng,
-    types,
-  })}`;
+  const url = new URL(
+    `${fourSquareBaseUrl}/venues/explore${getVenueExploreParams({
+      lat,
+      lng,
+      types,
+    })}`,
+  );
 
   return fetch(url, fetchOptions).then(res => res.json());
 };
 
-const formatFourSquareResponse = venues =>
-  venues.map(item => ({
+const formatFourSquareResponse = venues => {
+  return venues.map(item => ({
     title: get(item, 'name', 'N/A'),
     id: get(item, 'id', 'N/A'),
     location: {
@@ -45,23 +48,23 @@ const formatFourSquareResponse = venues =>
       isOpen: get(item, 'hours.isOpen', 'N/A'),
     },
   }));
+};
 
 const getVenueDetails = ({ response }) => {
-  const url = id =>
-    `${fourSquareBaseUrl}/venues/${id}?${fourSquareCredentials}&v=20170509`;
+  const url = id => new URL(`${fourSquareBaseUrl}/venues/${id}?${fourSquareCredentials}&v=20170509`);
 
   const ids = response.groups[0].items.map(item => item.venue.id);
 
   return ids.map(id =>
     fetch(url(id), fetchOptions)
       .then(res => res.json())
-      .then(res => res.response.venue)
+      .then(res => res.response.venue),
   );
 };
 
 module.exports = (req, res) => {
   const { lat, lng, types } = req.query;
-  console.log({ types });
+
   return getFourSquareRecommendations({ lat, lng, types })
     .then(res => Promise.all(getVenueDetails(res)))
     .then(formatFourSquareResponse)

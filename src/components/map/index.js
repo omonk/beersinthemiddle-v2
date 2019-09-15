@@ -22,6 +22,9 @@ const MapContainer = ({ zoom, locations, locationsMidPoint, recommendations, upd
           updateMapZoomValue(event.zoom);
         }
       }}
+      onContextMenu={({ event }) => {
+        console.log(event, event.buttons);
+      }}
     >
       {locationsMidPoint && locationsMidPoint.lat && locationsMidPoint.lng && (
         <Icon

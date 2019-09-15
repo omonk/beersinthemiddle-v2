@@ -9,10 +9,7 @@ export const FOUR_SQUARE_REQUEST_ERROR = 'FOUR_SQUARE_REQUEST_ERROR';
 export const SET_AVERAGE_LAT_LNG = 'SET_AVERAGE_LAT_LNG';
 export const SET_RECOMMENDATIONS_LOADING = 'SET_RECOMMENDATIONS_LOADING';
 
-const recommendationsSuccess = payload => ({
-  type: FOUR_SQUARE_REQUEST_SUCCESS,
-  payload,
-});
+const recommendationsSuccess = payload => ({ type: FOUR_SQUARE_REQUEST_SUCCESS, payload });
 
 const recommendationsError = err => ({
   type: FOUR_SQUARE_REQUEST_ERROR,
@@ -24,11 +21,11 @@ const setAverageLatLng = payload => ({
   payload,
 });
 
-export default ({ types }) => (dispatch, getState) => {
+export default ({ types, openNow = true, minprice = 0, maxprice = 4 }) => (dispatch, getState) => {
   const { lat, lng } = getLatLngMidPoint(getState());
 
   if (lat && lng) {
-    const query = `?lat=${lat}&lng=${lng}&types=${types.join(',')}`;
+    const query = `?lat=${lat}&lng=${lng}&keywords=${types.join(',')}`;
 
     dispatch(setAverageLatLng({ lat, lng }));
     dispatch({
@@ -39,7 +36,7 @@ export default ({ types }) => (dispatch, getState) => {
     });
     dispatch(push(`/search${query}`));
 
-    fetch(`/api/foursquare${query}`, {
+    fetch(`/api/places${query}`, {
       method: 'get',
       headers: {
         'Content-Type': 'application/json',
@@ -47,8 +44,9 @@ export default ({ types }) => (dispatch, getState) => {
     })
       .then(res => res.json())
       .then(res => {
+        const { recommendations } = res;
         dispatch(setMapCenterFromLatestLocations({ lat, lng }, 12));
-        dispatch(recommendationsSuccess(res));
+        dispatch(recommendationsSuccess(recommendations));
         dispatch({
           type: SET_RECOMMENDATIONS_LOADING,
         });

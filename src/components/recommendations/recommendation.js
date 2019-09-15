@@ -1,24 +1,23 @@
 import React, { useState } from 'react';
 import generate from 'shortid';
 
+const PriceRange = ({ range }) => <p>{new Array({ length: range }).map(i => '$')}</p>;
+
 const Recommendation = ({ data, centerMapToRecommendation }) => {
   const [isOpen, toggleOpen] = useState(false);
   const { lat, lng } = data.location;
+  const { types, location, priceRange } = data;
   return (
     <div className="recommendation-box">
       <h3 className="title is-5">{data.title}</h3>
-      {data.categories && <p>{data.categories.join(', ')}</p>}
+      {types && <p>{types.join(', ')}</p>}
+      {priceRange && <PriceRange range={priceRange} />}
       <div className={`${isOpen ? '' : 'is-hidden'} recommendation-box__main-content`}>
-        {data.location.address && (
+        {location.address && (
           <address>
-            {data.location.address.map((line, index, arr) => {
-              return (
-                <p key={generate()} style={{ marginBottom: '0px' }}>
-                  {line}
-                  {index < arr.length - 1 ? ',' : null}
-                </p>
-              );
-            })}
+            <p key={generate()} style={{ marginBottom: '0px' }}>
+              {location.address}
+            </p>
           </address>
         )}
       </div>

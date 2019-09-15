@@ -24,7 +24,7 @@ const mapStateToProps = state => {
     center: map.center,
     zoom: map.zoom,
     locationsMidPoint: map.locationsMidPoint,
-    recommendations,
+    recommendations: recommendations.locations,
     hasRecommendations,
     searchBoxIsHidden: ui.searchBoxIsHidden,
   };

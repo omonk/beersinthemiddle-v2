@@ -7,10 +7,7 @@ import SearchForm from './components/search-form/search-form-container';
 import Map from './components/map';
 import Recommendations from './components/recommendations/recommendations';
 
-import {
-  updateMapZoomValue,
-  centerMapToRecommendation,
-} from './redux/actions/map';
+import { updateMapZoomValue, centerMapToRecommendation } from './redux/actions/map';
 import { hasRecommendationsSelector } from './redux/selectors/recommendations/recommendations';
 import iconLibrary from './utils/icons';
 
@@ -30,18 +27,13 @@ const App = ({
 }) => {
   return (
     <div className="App">
-      <section
-        className={`search ${searchBoxIsHidden ? 'search--is-hidden' : ''}`}
-      >
+      <section className={`search ${searchBoxIsHidden ? 'search--is-hidden' : ''}`}>
         <div className="box">
           <SearchForm />
         </div>
       </section>
 
-      <Recommendations
-        data={recommendations}
-        centerMapToRecommendation={centerMapToRecommendation}
-      />
+      <Recommendations data={recommendations} centerMapToRecommendation={centerMapToRecommendation} />
 
       <div className="map__wrapper--outer">
         <div className="map__wrapper--inner">
@@ -69,7 +61,7 @@ const mapStateToProps = state => {
     locations,
     center: map.center,
     zoom: map.zoom,
-    locationsMidPoint: map.center,
+    locationsMidPoint: map.locationsMidPoint,
     recommendations,
     hasRecommendations,
     searchBoxIsHidden: ui.searchBoxIsHidden,
@@ -80,12 +72,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch, state) => {
   return {
     updateMapZoomValue: zoom => dispatch(updateMapZoomValue(zoom)),
-    centerMapToRecommendation: (lat, lng) =>
-      dispatch(centerMapToRecommendation(lat, lng)),
+    centerMapToRecommendation: (lat, lng) => dispatch(centerMapToRecommendation(lat, lng)),
   };
 };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(App);
