@@ -3,9 +3,9 @@ import GoogleMapReact from 'google-map-react';
 import PropTypes from 'prop-types';
 import { generate } from 'shortid';
 
-import LocationMarker from './components/locationMarker';
-import LocationMidPointMarker from './components/locationMidPointMarker';
 import RecommendationsMarker from './components/recommendationsMarker';
+import Icon from '../common/icon';
+import { faMapMarker, faMapPin } from '@fortawesome/free-solid-svg-icons';
 
 class MapContainer extends Component {
   render() {
@@ -36,7 +36,11 @@ class MapContainer extends Component {
         {locationsMidPoint &&
           locationsMidPoint.lat &&
           locationsMidPoint.lng && (
-            <LocationMidPointMarker
+            <Icon
+              icon={faMapPin}
+              size="large"
+              iconSize="3x"
+              className="map__marker"
               lat={locationsMidPoint.lat}
               lng={locationsMidPoint.lng}
               text={locationsMidPoint.label}
@@ -45,11 +49,14 @@ class MapContainer extends Component {
 
         {locations &&
           locations.map((location, i) => (
-            <LocationMarker
+            <Icon
+              icon={faMapMarker}
+              className="map__marker"
+              size="large"
+              iconSize="3x"
               key={generate()}
               lat={location.lat}
               lng={location.lng}
-              text=""
               color={location.color}
             />
           ))}

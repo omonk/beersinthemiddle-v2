@@ -19,12 +19,6 @@
     width: 25%;
   }
 
-  @media screen and (max-width: 768px) {
-    .box {
-      padding: 0.5rem;
-    }
-  }
-
   &__filter {
     margin: 1rem 0;
   }
@@ -42,6 +36,7 @@
     opacity: 0;
   }
 }
+
 .location-list {
   list-style-type: none;
   margin: 0;
@@ -50,11 +45,12 @@
 .location-list-item {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   margin: 1rem 0;
 
   p {
     margin-bottom: 0;
+    margin-left: 0.75rem;
+    flex-grow: 2;
   }
 
   button {

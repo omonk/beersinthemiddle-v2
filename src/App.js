@@ -26,6 +26,7 @@ const App = ({
   center,
   zoom,
   searchBoxIsHidden,
+  isRecommendationsLoading,
 }) => {
   return (
     <div className="App">
@@ -43,11 +44,6 @@ const App = ({
       />
 
       <div className="map__wrapper--outer">
-        {mapCenterLoading && (
-          <div className="map__loading">
-            <p>Map center loading...</p>
-          </div>
-        )}
         <div className="map__wrapper--inner">
           <Map
             center={center}
@@ -56,6 +52,7 @@ const App = ({
             locationsMidPoint={locationsMidPoint}
             recommendations={recommendations}
             updateMapZoomValue={updateMapZoomValue}
+            isLoading={isRecommendationsLoading}
           />
         </div>
       </div>
@@ -72,10 +69,11 @@ const mapStateToProps = state => {
     locations,
     center: map.center,
     zoom: map.zoom,
-    locationsMidPoint: map.locationsMidPoint,
+    locationsMidPoint: map.center,
     recommendations,
     hasRecommendations,
     searchBoxIsHidden: ui.searchBoxIsHidden,
+    isRecommendationsLoading: ui.recommendationsLoading,
   };
 };
 

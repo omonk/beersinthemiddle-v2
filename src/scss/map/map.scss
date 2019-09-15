@@ -26,3 +26,8 @@
   height: 100%;
   z-index: 10;
 }
+
+.map__marker {
+  transform: translate(-50%, -50%);
+  z-index: 4;
+}

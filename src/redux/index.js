@@ -28,5 +28,13 @@ export default function configureStore(preLoadedState) {
     )
   );
 
+  if (process.env.NODE_ENV !== 'production') {
+    if (module.hot) {
+      module.hot.accept('./reducer', () => {
+        store.replaceReducer(createRootReducer(history));
+      });
+    }
+  }
+
   return store;
 }

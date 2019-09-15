@@ -9,10 +9,6 @@ export const FOUR_SQUARE_REQUEST_ERROR = 'FOUR_SQUARE_REQUEST_ERROR';
 export const SET_AVERAGE_LAT_LNG = 'SET_AVERAGE_LAT_LNG';
 export const SET_RECOMMENDATIONS_LOADING = 'SET_RECOMMENDATIONS_LOADING';
 
-const recommendationsRequest = () => ({
-  type: FOUR_SQUARE_REQUEST,
-});
-
 const recommendationsSuccess = payload => ({
   type: FOUR_SQUARE_REQUEST_SUCCESS,
   payload,
@@ -35,7 +31,9 @@ export default ({ types }) => (dispatch, getState) => {
     const query = `?lat=${lat}&lng=${lng}&types=${types.join(',')}`;
 
     dispatch(setAverageLatLng({ lat, lng }));
-    dispatch(recommendationsRequest);
+    dispatch({
+      type: FOUR_SQUARE_REQUEST,
+    });
     dispatch({
       type: SET_RECOMMENDATIONS_LOADING,
     });

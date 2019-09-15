@@ -1,9 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-const Location = ({ data, handleRemoval }) => (
+import Icon from '../../common/icon';
+import { faMapMarker } from '@fortawesome/free-solid-svg-icons';
+
+const Location = ({ data: { address, placeId, color }, handleRemoval }) => (
   <li className="location-list-item">
-    <p>{data.address}</p>
-    <button className="delete" onClick={() => handleRemoval(data.placeId)} />
+    <Icon icon={faMapMarker} size="small" color={color} />
+    <p>{address}</p>
+    <button className="delete" onClick={() => handleRemoval(placeId)} />
   </li>
 );
 
