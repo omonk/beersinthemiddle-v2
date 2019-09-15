@@ -47,10 +47,6 @@ Pull requests and issues are very welcome!
 
 - **Ollie Monk** - _Main author_ - [Github](https://github.com/omonk)
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
 ## Acknowledgments
 
 - Hat tip to anyone whose code was used
