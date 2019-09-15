@@ -1,6 +1,8 @@
 {
   "name": "beersinthemiddle-v2",
   "version": "0.1.0",
+  "license": "UNLICENSED",
+  "private": true,
   "scripts": {
     "build": "react-scripts build",
     "dev": "react-scripts start",
