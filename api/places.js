@@ -1,28 +1,42 @@
-const get = require('lodash.get');
+const Get = require('lodash.get');
+const { titleCase } = require('change-case');
+
 const googleMapsClient = require('@google/maps').createClient({
   key: process.env.GMAPS,
   Promise,
 });
 
 const formatResponse = venues => {
+  console.log({ venues });
   return venues.map(item => ({
-    title: get(item, 'name', undefined),
-    id: get(item, 'place_id', undefined),
+    title: Get(item, 'name', undefined),
+    id: Get(item, 'place_id', undefined),
     location: {
-      address: get(item, 'vicinity', undefined),
-      lat: get(item, 'geometry.location.lat', undefined),
-      lng: get(item, 'geometry.location.lng', undefined),
+      address: Get(item, 'vicinity', undefined),
+      lat: Get(item, 'geometry.location.lat', undefined),
+      lng: Get(item, 'geometry.location.lng', undefined),
     },
-    url: get(item, 'url', undefined),
+    url: Get(item, 'url', undefined),
     price: {
-      priceRange: get(item, 'price_level', undefined),
+      priceRange: Get(item, 'price_level', undefined),
     },
-    rating: get(item, 'rating', 'N/A'),
-    types: get(item, 'types', []).filter(i => !['point_of_interest', 'establishment'].includes(i)),
+    rating: Get(item, 'rating', 'N/A'),
+    types: Get(item, 'types', []).reduce(
+      (acc, curr) =>
+        ['point_of_interest', 'establishment'].includes(curr)
+          ? acc
+          : acc.concat([
+              {
+                name: curr,
+                label: titleCase(curr),
+              },
+            ]),
+      [],
+    ),
     hours: {
-      openNow: get(item, 'opening_hours.open_now', undefined),
+      openNow: Get(item, 'opening_hours.open_now', undefined),
     },
-    permanentlyClosed: get(item, 'permanently_closed', false),
+    permanentlyClosed: Get(item, 'permanently_closed', false),
   }));
 };
 
