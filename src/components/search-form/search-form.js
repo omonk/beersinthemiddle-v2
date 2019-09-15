@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { Formik, Form, Field, FieldArray } from 'formik';
 import IconLocate from '../icons/icon-locate';
 import Locations from '../locations';
-import generate from 'shortid';
 
 const renderPlacesAutocomplete = ({ field, form, addLocationToState }) => {
   return (
@@ -47,14 +46,6 @@ const renderPlacesAutocomplete = ({ field, form, addLocationToState }) => {
   );
 };
 
-const Checkbox = ({ field }) => (
-  <div>
-    <label className="checkbox">
-      <input {...field} checked={field.value} type="checkbox" /> {field.name}
-    </label>
-  </div>
-);
-
 const types = [
   { name: 'bar', label: 'Bar' },
   { name: 'club', label: 'Club' },
@@ -63,7 +54,8 @@ const types = [
 ];
 
 const SearchForm = ({
-  geolocation,
+  isGeoLocating,
+  isGeoLocatingError,
   locations,
   geoLocationRequest,
   addLocationToState,
@@ -107,16 +99,25 @@ const SearchForm = ({
                   })
                 }
               />
-              {!!geolocation && (!geolocation.lat && !geolocation.lng) && (
-                <button
-                  className="button"
-                  type="button"
-                  onClick={geoLocationRequest}
-                >
-                  <span className="is-hidden-mobile">Add current location</span>
-                  <IconLocate />
-                </button>
+
+              <button
+                className={`button ${isGeoLocating ? 'is-loading' : ''}`}
+                type="button"
+                onClick={geoLocationRequest}
+              >
+                <span className="is-hidden-mobile">Add current location</span>
+                <IconLocate />
+              </button>
+
+              {isGeoLocatingError && (
+                <p className="has-text-danger">
+                  Hmm... we seem to have an issue locating you{' '}
+                  <span role="img" aria-label="thinking emoji">
+                    🤔
+                  </span>
+                </p>
               )}
+
               <Locations locations={locations} handleRemoval={handleRemoval} />
               <section className="search__filter">
                 <p>Filter your searches</p>
