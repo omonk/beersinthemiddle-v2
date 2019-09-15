@@ -48,10 +48,10 @@ const renderPlacesAutocomplete = ({ field, form, addLocationToState }) => {
 };
 
 const types = [
-  { name: 'bar', label: 'Bar' },
-  { name: 'club', label: 'Club' },
-  { name: 'pub', label: 'Pub' },
-  { name: 'restaurant', label: 'Restaurant' },
+  { name: 'bar', label: 'Bar', checkedOnLoad: true },
+  { name: 'club', label: 'Club', checkedOnLoad: true },
+  { name: 'pub', label: 'Pub', checkedOnLoad: true },
+  { name: 'restaurant', label: 'Restaurant', checkedOnLoad: true },
 ];
 
 const SearchForm = ({
@@ -80,7 +80,9 @@ const SearchForm = ({
       <Formik
         initialValues={{
           inputValue: '',
-          types: [],
+          types: types
+            .filter(({ checkedOnLoad: i }) => i)
+            .map(({ name }) => name),
         }}
         onSubmit={({ types }) => {
           fourSquareRequest({
