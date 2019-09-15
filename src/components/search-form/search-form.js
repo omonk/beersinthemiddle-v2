@@ -153,7 +153,7 @@ const SearchForm = ({
         }}
         onSubmit={({ types }) => {
           fourSquareRequest({
-            types,
+            keyword: types,
           });
         }}
       />

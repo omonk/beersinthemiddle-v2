@@ -18,7 +18,7 @@ const formatResponse = venues => {
       priceRange: get(item, 'price_level', undefined),
     },
     rating: get(item, 'rating', 'N/A'),
-    types: get(item, 'types', []),
+    types: get(item, 'types', []).filter(i => !['point_of_interest', 'establishment'].includes(i)),
     hours: {
       openNow: get(item, 'opening_hours.open_now', undefined),
     },
@@ -27,13 +27,15 @@ const formatResponse = venues => {
 };
 
 module.exports = async (req, res) => {
-  const { lat, lng, radius = 1000 } = req.query;
+  const { lat, lng, radius = 500, keyword } = req.query;
 
-  return googleMapsClient
-    .placesNearby({ location: { lat, lng }, radius, keyword: 'bar' })
-    .asPromise()
+  const places = keyword
+    .split(',')
+    .map(keyword => googleMapsClient.placesNearby({ location: { lat, lng }, radius, keyword }).asPromise());
+
+  return Promise.all(places)
     .then(response => {
-      const { results } = response.json;
+      const { results } = response.reduce((acc, { json }) => ({ ...acc, ...json }), []);
       return formatResponse(results);
     })
     .then(recommendations => {

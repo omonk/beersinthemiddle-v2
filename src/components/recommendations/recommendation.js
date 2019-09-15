@@ -6,12 +6,13 @@ const PriceRange = ({ range }) => <p>{new Array({ length: range }).map(i => '$')
 const Recommendation = ({ data, centerMapToRecommendation }) => {
   const [isOpen, toggleOpen] = useState(false);
   const { lat, lng } = data.location;
-  const { types, location, priceRange } = data;
+  const { types, location, price } = data;
+  console.log({ data });
   return (
     <div className="recommendation-box">
       <h3 className="title is-5">{data.title}</h3>
       {types && <p>{types.join(', ')}</p>}
-      {priceRange && <PriceRange range={priceRange} />}
+      {price && price.priceRange && <PriceRange range={price.priceRange} />}
       <div className={`${isOpen ? '' : 'is-hidden'} recommendation-box__main-content`}>
         {location.address && (
           <address>

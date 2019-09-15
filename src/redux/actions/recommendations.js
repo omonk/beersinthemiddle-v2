@@ -21,11 +21,11 @@ const setAverageLatLng = payload => ({
   payload,
 });
 
-export default ({ types, openNow = true, minprice = 0, maxprice = 4 }) => (dispatch, getState) => {
+export default ({ keyword, openNow = true, minprice = 0, maxprice = 4 }) => (dispatch, getState) => {
   const { lat, lng } = getLatLngMidPoint(getState());
 
   if (lat && lng) {
-    const query = `?lat=${lat}&lng=${lng}&keywords=${types.join(',')}`;
+    const query = `?lat=${lat}&lng=${lng}&keyword=${keyword.join(',')}`;
 
     dispatch(setAverageLatLng({ lat, lng }));
     dispatch({
