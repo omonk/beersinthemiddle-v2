@@ -1,10 +1,12 @@
+$search-padding: 0.25rem;
+
 .search {
-  z-index: 1;
+  z-index: 10;
   position: absolute;
   top: 0;
   transition: transform ease-in-out 400ms;
   width: 100%;
-  padding: 0.25rem;
+  padding: $search-padding;
 
   &--is-hidden {
     transform: translateY(-75%);
@@ -21,6 +23,10 @@
 
   &__filter {
     margin: 1rem 0;
+  }
+
+  .box {
+    max-height: calc(100vh - $search-padding * 2);
   }
 }
 
@@ -56,8 +62,29 @@
   button {
     margin: 0 0.5rem;
   }
+
+  .delete {
+    cursor: pointer;
+  }
 }
 
 .suggestion {
-  margin: 0.5rem 0;
+  padding: 0.75rem 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: transparent;
+  transition: background-color 200ms ease-out;
+
+  &:hover,
+  &:focus {
+    background-color: $grey-lighter;
+  }
+
+  .icon {
+    min-width: 2rem;
+    min-height: 2rem;
+    margin-right: 0.5rem;
+  }
 }

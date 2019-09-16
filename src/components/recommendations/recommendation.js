@@ -1,7 +1,9 @@
 import React, { Fragment, useState } from 'react';
 import generate from 'shortid';
 
-const PriceRange = ({ range }) => <p>{new Array({ length: range }).map(i => '$')}</p>;
+const PriceRange = ({ range, fill = '$' }) => (
+  <p>Price range: {range ? new Array(range).fill(fill).join('') : 'n/a'}</p>
+);
 
 const Recommendation = ({ data, centerMapToRecommendation }) => {
   const [isOpen, toggleOpen] = useState(false);
@@ -13,6 +15,7 @@ const Recommendation = ({ data, centerMapToRecommendation }) => {
       <h3 className="title is-5">{data.title}</h3>
       {types && types.length > 0 && (
         <p>
+          Categories:{' '}
           {types.map(({ label, name }) => {
             return (
               <Fragment key={name}>
@@ -23,7 +26,7 @@ const Recommendation = ({ data, centerMapToRecommendation }) => {
           })}
         </p>
       )}
-      {price && price.priceRange && <PriceRange range={price.priceRange} />}
+      <PriceRange range={price.priceRange} />
       <div className={`${isOpen ? '' : 'is-hidden'} recommendation-box__main-content`}>
         {location.address && (
           <address>

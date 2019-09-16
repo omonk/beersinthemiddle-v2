@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PlacesAutocomplete from 'react-places-autocomplete';
 import PropTypes from 'prop-types';
 import { Formik, Form, Field, FieldArray } from 'formik';
-import { faMapPin } from '@fortawesome/free-solid-svg-icons';
+import { faMapPin, faPlus } from '@fortawesome/free-solid-svg-icons';
 import generate from 'shortid';
 import Locations from '../locations';
 import Icon from '../common/icon';
@@ -10,6 +10,11 @@ import Icon from '../common/icon';
 const renderPlacesAutocomplete = ({ field, form, addLocationToState }) => {
   return (
     <PlacesAutocomplete
+      ref={c => {
+        if (!c) return;
+        console.log({ c });
+        c.handleInputOnBlur = () => {};
+      }}
       value={field.value}
       onChange={value => form.setFieldValue(field.name, value)}
       onSelect={(address, placeId) => {
@@ -20,7 +25,7 @@ const renderPlacesAutocomplete = ({ field, form, addLocationToState }) => {
       {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
         <Fragment>
           <div className="field">
-            <label className="label">Add your locations</label>
+            <label className="label">Add each friends location in the box below:</label>
             <input
               {...getInputProps({
                 placeholder: 'Search Places ...',
@@ -34,7 +39,8 @@ const renderPlacesAutocomplete = ({ field, form, addLocationToState }) => {
             {suggestions.map(suggestion => {
               return (
                 <div key={generate()} className="suggestion" {...getSuggestionItemProps(suggestion, {})}>
-                  <span>{suggestion.description}</span>
+                  <Icon icon={faPlus} size="medium" />
+                  <span className="label">{suggestion.description}</span>
                 </div>
               );
             })}
@@ -47,7 +53,7 @@ const renderPlacesAutocomplete = ({ field, form, addLocationToState }) => {
 
 const types = [
   { name: 'bar', label: 'Bar', checkedOnLoad: true },
-  { name: 'club', label: 'Club', checkedOnLoad: true },
+  { name: 'night club', label: 'Night Club', checkedOnLoad: true },
   { name: 'pub', label: 'Pub', checkedOnLoad: true },
   { name: 'restaurant', label: 'Restaurant', checkedOnLoad: true },
 ];
@@ -66,7 +72,7 @@ const SearchForm = ({
 }) => {
   return (
     <Fragment>
-      <h1 className="title is-hidden-mobile">
+      <h1 className="title">
         Beers In The Middle{' '}
         <span role="img" aria-label="beer">
           🍻
@@ -96,9 +102,7 @@ const SearchForm = ({
                 type="button"
                 onClick={geoLocationRequest}
               >
-                <span className="is-hidden-mobile">Add current location</span>
-
-                <Icon icon={faMapPin} size="medium" />
+                <span>Add current location</span> <Icon icon={faMapPin} size="medium" />
               </button>
               {isGeoLocatingError && (
                 <p className="has-text-danger">
@@ -132,7 +136,7 @@ const SearchForm = ({
                                   }
                                 }}
                               />{' '}
-                              {name}
+                              {label}
                             </label>
                           </div>
                         );
