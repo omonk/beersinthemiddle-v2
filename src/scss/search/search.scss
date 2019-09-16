@@ -30,7 +30,7 @@ $search-padding: 0.25rem;
   }
 
   .box {
-    max-height: calc(100vh - $search-padding * 2);
+    max-height: calc(100vh - #{$search-padding} * 2);
   }
 }
 
