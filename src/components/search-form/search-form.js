@@ -6,6 +6,7 @@ import { faMapPin, faPlus } from '@fortawesome/free-solid-svg-icons';
 import generate from 'shortid';
 import Locations from '../locations';
 import Icon from '../common/icon';
+import titleImg from '../../assets/title.png';
 
 const renderPlacesAutocomplete = ({ field, form, addLocationToState }) => {
   return (
@@ -72,12 +73,15 @@ const SearchForm = ({
 }) => {
   return (
     <Fragment>
-      <h1 className="title">
+      <h1 className="title is-sr-only">
         Beers In The Middle{' '}
         <span role="img" aria-label="beer">
           🍻
         </span>
       </h1>
+      <div className="logo-wrapper">
+        <img src={titleImg} alt="Beers in the middle logo" />
+      </div>
       <h2 className="is-hidden-mobile">Find the most convienient places to hang out with your friends</h2>
       <Formik
         initialValues={{

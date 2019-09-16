@@ -8,6 +8,10 @@ $search-padding: 0.25rem;
   width: 100%;
   padding: $search-padding;
 
+  .title {
+    font-family: 'Courier New';
+  }
+
   &--is-hidden {
     transform: translateY(-75%);
   }
@@ -28,6 +32,10 @@ $search-padding: 0.25rem;
   .box {
     max-height: calc(100vh - $search-padding * 2);
   }
+}
+
+.logo-wrapper {
+  margin: 0.5rem 0;
 }
 
 .search-hide {
@@ -75,7 +83,7 @@ $search-padding: 0.25rem;
   align-items: center;
   justify-content: flex-start;
   background-color: transparent;
-  transition: background-color 200ms ease-out;
+  transition: background-color 200ms ease;
 
   &:hover,
   &:focus {
