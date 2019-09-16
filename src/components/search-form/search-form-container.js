@@ -38,7 +38,7 @@ const mapDispatchToProps = (dispatch, state) => {
     },
     handleRemoval: placeId => dispatch(removeLocation(placeId)),
     fourSquareRequest: values => dispatch(getRecommendations(values)),
-    toggleSearchBox: () => dispatch(toggleSearchBoxHidden),
+    toggleSearchBox: () => dispatch(toggleSearchBoxHidden()),
   };
 };
 

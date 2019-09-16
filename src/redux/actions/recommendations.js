@@ -50,7 +50,7 @@ export default ({ keyword, openNow = true, minprice = 0, maxprice = 4 }) => (dis
         dispatch({
           type: SET_RECOMMENDATIONS_LOADING,
         });
-        dispatch(toggleSearchBoxHidden);
+        dispatch(toggleSearchBoxHidden(true));
       })
       .catch(err => {
         dispatch({

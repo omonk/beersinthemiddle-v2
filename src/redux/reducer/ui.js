@@ -16,7 +16,7 @@ export default (state = initialState, action) => {
     case TOGGLE_SEARCH_BOX_HIDDEN:
       return {
         ...state,
-        searchBoxIsHidden: !state.searchBoxIsHidden,
+        searchBoxIsHidden: action.payload ? action.payload : !state.searchBoxIsHidden,
       };
     default:
       return state;
