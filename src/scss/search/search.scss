@@ -97,3 +97,16 @@ $search-padding: 0.25rem;
     margin-right: 0.5rem;
   }
 }
+
+.saved-searches {
+  position: absolute;
+  transition: all ease-in-out 400ms;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+
+  &--is-hidden {
+    top: -100%;
+  }
+}

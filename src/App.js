@@ -4,6 +4,7 @@ import './scss/App.scss';
 import { connect } from 'react-redux';
 
 import SearchForm from './components/search-form/search-form-container';
+import SavedSearches from './components/saved-searches/saved-searches';
 import Map from './components/map';
 import Recommendations from './components/recommendations/recommendations';
 
@@ -23,13 +24,18 @@ const App = ({
   center,
   zoom,
   searchBoxIsHidden,
+  loadSearchBoxIsHidden,
   isRecommendationsLoading,
 }) => {
+  console.log({ loadSearchBoxIsHidden });
   return (
     <div className="App">
       <section className={`search ${searchBoxIsHidden ? 'search--is-hidden' : ''}`}>
-        <div className="box">
+        <div className="box" style={{ position: 'relative' }}>
           <SearchForm />
+          <div className={`box saved-searches ${loadSearchBoxIsHidden ? 'saved-searches--is-hidden' : ''}`}>
+            <SavedSearches />
+          </div>
         </div>
       </section>
 
@@ -65,6 +71,7 @@ const mapStateToProps = state => {
     recommendations,
     hasRecommendations,
     searchBoxIsHidden: ui.searchBoxIsHidden,
+    loadSearchBoxIsHidden: ui.loadSearchBoxIsHidden,
     isRecommendationsLoading: ui.recommendationsLoading,
   };
 };
@@ -76,7 +83,4 @@ const mapDispatchToProps = (dispatch, state) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

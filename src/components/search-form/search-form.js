@@ -69,11 +69,13 @@ const SearchForm = ({
   toggleSearchBox,
   requestLocations,
   searchBoxIsHidden,
+  savedSearchesIsHidden,
+  toggleSavedSearches,
   handleRemoval,
   isLoading,
 }) => {
   return (
-    <Fragment>
+    <div>
       <h1 className="title is-sr-only">
         Beers In The Middle{' '}
         <span role="img" aria-label="beer">
@@ -168,14 +170,17 @@ const SearchForm = ({
           });
         }}
       />
+      <button type="button" className="button is-fullwidth is-info search-hide" onClick={() => toggleSavedSearches()}>
+        Show saved searches
+      </button>
       <button
         type="button"
-        className="button is-small is-fullwidth is-info search-hide"
+        className="button is-fullwidth is-small is-primary search-hide"
         onClick={() => toggleSearchBox()}
       >
         {searchBoxIsHidden ? 'Show form' : 'Hide form'}
       </button>
-    </Fragment>
+    </div>
   );
 };
 

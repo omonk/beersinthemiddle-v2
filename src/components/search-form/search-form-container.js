@@ -5,7 +5,7 @@ import geoLocationRequest from '../../redux/actions/geo-location';
 import { hasRecommendationsSelector } from '../../redux/selectors/recommendations/recommendations';
 import getRecommendations from '../../redux/actions/recommendations';
 import { addLocation, removeLocation } from '../../redux/actions/locations';
-import { toggleSearchBoxHidden } from '../../redux/actions/ui';
+import { toggleSavedSearches, toggleSearchBoxHidden } from '../../redux/actions/ui';
 
 const SearchFormContainer = props => {
   return <SearchForm {...props} />;
@@ -39,6 +39,7 @@ const mapDispatchToProps = (dispatch, state) => {
     handleRemoval: placeId => dispatch(removeLocation(placeId)),
     requestLocations: values => dispatch(getRecommendations(values)),
     toggleSearchBox: () => dispatch(toggleSearchBoxHidden()),
+    toggleSavedSearches: () => dispatch(toggleSavedSearches()),
   };
 };
 

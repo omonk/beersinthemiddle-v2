@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "build": "react-scripts build",
+    "start": "now dev --listen 127.0.0.1:8080",
     "dev": "react-scripts start",
     "eject": "react-scripts eject",
     "now:prod": "now --prod -e FOURSQUARE_API_CLIENT=@foursquare_api_client -e FOURSQUARE_API_SECRET=@foursquare_api_secret -e GMAPS=@gmaps",

@@ -1,8 +1,9 @@
-import { TOGGLE_SEARCH_BOX_HIDDEN } from '../actions/ui';
+import { TOGGLE_SEARCH_BOX_HIDDEN, TOGGLE_SAVED_SEARCHES_PANEL } from '../actions/ui';
 import { SET_RECOMMENDATIONS_LOADING } from '../actions/recommendations';
 
 const initialState = {
   searchBoxIsHidden: false,
+  loadSearchBoxIsHidden: true,
   recommendationsLoading: false,
 };
 
@@ -17,6 +18,10 @@ export default (state = initialState, action) => {
       return {
         ...state,
         searchBoxIsHidden: action.payload ? action.payload : !state.searchBoxIsHidden,
+      };
+    case TOGGLE_SAVED_SEARCHES_PANEL:
+      return {
+        loadSearchBoxIsHidden: action.payload ? action.payload : !state.loadSearchBoxIsHidden,
       };
     default:
       return state;
