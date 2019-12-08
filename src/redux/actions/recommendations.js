@@ -2,6 +2,7 @@ import { push } from 'connected-react-router';
 import { getLatLngMidPoint } from '../selectors/locations/locations';
 import { setMapCenterFromLatestLocations } from './map';
 import { toggleSearchBoxHidden } from './ui';
+import { updateSavedSearches } from './saved-searches';
 
 export const FOUR_SQUARE_REQUEST = 'FOUR_SQUARE_REQUEST';
 export const FOUR_SQUARE_REQUEST_SUCCESS = 'FOUR_SQUARE_REQUEST_SUCCESS';
@@ -53,11 +54,7 @@ export default ({ keyword, openNow = true, minprice = 0, maxprice = 4 }) => (dis
           type: SET_RECOMMENDATIONS_LOADING,
         });
         dispatch(toggleSearchBoxHidden(true));
-
-        const previousSearches = JSON.parse(localStorage.getItem('previous-searches')) || [];
-        const newSearches = [...previousSearches, { date: Date.now(), locations }];
-
-        localStorage.setItem('previous-searches', JSON.stringify(newSearches));
+        dispatch(updateSavedSearches(locations));
       })
       .catch(err => {
         dispatch({

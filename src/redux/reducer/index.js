@@ -3,6 +3,7 @@ import locations from './locations';
 import geolocation from './geo-location';
 import map from './map';
 import recommendations from './recommendations';
+import savedSearches from './saved-searches';
 import ui from './ui';
 import { connectRouter } from 'connected-react-router';
 
@@ -14,4 +15,5 @@ export default history =>
     map,
     recommendations,
     ui,
+    savedSearches,
   });

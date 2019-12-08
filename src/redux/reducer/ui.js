@@ -21,6 +21,7 @@ export default (state = initialState, action) => {
       };
     case TOGGLE_SAVED_SEARCHES_PANEL:
       return {
+        searchBoxIsHidden: false,
         loadSearchBoxIsHidden: action.payload ? action.payload : !state.loadSearchBoxIsHidden,
       };
     default:
