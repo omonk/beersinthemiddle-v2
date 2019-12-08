@@ -23,7 +23,7 @@ const Search = styled.div`
 
   width: 100%;
   min-height: 500px;
-  max-height: calc(100vh - 10px);
+  max-height: 100vh;
   overflow: scroll;
   background-color: white;
   padding: 0.75rem;
