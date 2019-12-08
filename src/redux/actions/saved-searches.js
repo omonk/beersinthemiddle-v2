@@ -1,10 +1,24 @@
+import hash from 'hash-obj';
+
 export const UPDATE_SAVED_SEARCHES = 'UPDATE_SAVED_SEARCHES';
 
-export const updateSavedSearches = locations => {
+export const updateSavedSearches = ({ locations, locationsMidPoint, keyword }) => {
   const previousSearches = JSON.parse(localStorage.getItem('previous-searches')) || [];
-  const newSearches = [...previousSearches, { date: Date.now(), locations }];
+  const newSearchData = {
+    locations,
+    locationsMidPoint,
+    keyword,
+  };
 
-  localStorage.setItem('previous-searches', JSON.stringify(newSearches));
+  const newSearchDataHash = hash(newSearchData);
+  const shouldAddNewSearch = previousSearches.every(({ hash }) => hash !== newSearchDataHash);
 
-  return { type: UPDATE_SAVED_SEARCHES, payload: newSearches };
+  if (shouldAddNewSearch) {
+    const newSearches = [...previousSearches, { ...newSearchData, date: Date.now(), hash: newSearchDataHash }];
+
+    localStorage.setItem('previous-searches', JSON.stringify(newSearches));
+    return { type: UPDATE_SAVED_SEARCHES, payload: newSearches };
+  }
+
+  return { type: UPDATE_SAVED_SEARCHES, payload: previousSearches };
 };

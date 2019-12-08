@@ -39,6 +39,7 @@
     "emotion": "^10.0.23",
     "formik": "^1.5.8",
     "google-map-react": "^1.1.4",
+    "hash-obj": "^3.0.0",
     "history": "^4.7.2",
     "lodash.get": "^4.4.2",
     "mathjs": "^6.2.1",

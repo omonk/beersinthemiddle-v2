@@ -22,7 +22,7 @@ const setAverageLatLng = payload => ({
   payload,
 });
 
-export default ({ keyword, openNow = true, minprice = 0, maxprice = 4 }) => (dispatch, getState) => {
+export default ({ keyword = [], openNow = true, minprice = 0, maxprice = 4 }) => (dispatch, getState) => {
   const state = getState();
   const { lat, lng } = getLatLngMidPoint(state);
   const { locations } = state;
@@ -52,14 +52,18 @@ export default ({ keyword, openNow = true, minprice = 0, maxprice = 4 }) => (dis
         dispatch(recommendationsSuccess(recommendations));
         dispatch({
           type: SET_RECOMMENDATIONS_LOADING,
+          payload: false,
         });
         dispatch(toggleSearchBoxHidden(true));
-        dispatch(updateSavedSearches(locations));
+        const { map } = getState();
+        dispatch(updateSavedSearches({ locations, locationsMidPoint: map.locationsMidPoint, keyword }));
       })
       .catch(err => {
         dispatch({
           type: SET_RECOMMENDATIONS_LOADING,
+          payload: false,
         });
+        console.log({ err });
         dispatch(recommendationsError(err));
       });
   }

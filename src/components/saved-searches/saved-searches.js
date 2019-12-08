@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { toggleSavedSearches } from '../../redux/actions/ui';
+import { newRequestFromSavedSearch } from '../../redux/actions/locations';
 import moment from 'moment';
 import styled from '@emotion/styled';
 
@@ -22,14 +23,15 @@ const Button = styled.button`
 `;
 
 function SavedSearches(props) {
-  const { toggleSavedSearches, savedSearches = [] } = props;
+  const { toggleSavedSearches, savedSearches = [], newRequestFromSavedSearch } = props;
 
   return (
     <div>
       <h1 className="title is-4">Saved Searches</h1>
 
       {savedSearches.length > 0 ? (
-        savedSearches.map(({ date, locations }) => {
+        savedSearches.map(search => {
+          const { date, locations } = search;
           return (
             <SavedSearch key={date}>
               <SearchTitle>{moment(date).format('Do MMMM')}</SearchTitle>
@@ -40,7 +42,13 @@ function SavedSearches(props) {
                   </Location>
                 );
               })}
-              <Button type="button" className="button is-fullwidth is-danger" onClick={() => {}}>
+              <Button
+                type="button"
+                className="button is-fullwidth is-danger"
+                onClick={() => {
+                  newRequestFromSavedSearch(search);
+                }}
+              >
                 Load
               </Button>
               <hr />
@@ -70,6 +78,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch, state) => {
   return {
     toggleSavedSearches: () => dispatch(toggleSavedSearches()),
+    newRequestFromSavedSearch: data => {
+      return dispatch(newRequestFromSavedSearch(data));
+    },
   };
 };
 

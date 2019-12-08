@@ -109,13 +109,15 @@ $search-padding: 0.25rem;
 
 .saved-searches {
   position: absolute;
-  transition: all ease-in-out 400ms;
+  opacity: 1;
+  transition: all ease-in-out 500ms;
   top: 0;
   left: 0;
   right: 0;
   height: 100%;
 
   &--is-hidden {
+    opacity: 0;
     top: -100%;
   }
 }

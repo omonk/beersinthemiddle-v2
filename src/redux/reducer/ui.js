@@ -12,7 +12,7 @@ export default (state = initialState, action) => {
     case SET_RECOMMENDATIONS_LOADING:
       return {
         ...state,
-        recommendationsLoading: !state.recommendationsLoading,
+        recommendationsLoading: action.payload ? action.payload : !state.recommendationsLoading,
       };
     case TOGGLE_SEARCH_BOX_HIDDEN:
       return {

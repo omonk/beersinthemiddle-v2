@@ -1,15 +1,27 @@
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import randomColor from 'randomcolor';
 import { setMapCenterFromLatestLocations } from './map';
+import { SET_AVERAGE_LAT_LNG } from './recommendations';
+import getRecommendations from './recommendations';
+import { toggleSavedSearches } from './ui';
+
 export const ADD_LOCATION = 'ADD_LOCATION';
 export const ADD_LOCATION_SUCCESS = 'ADD_LOCATION_SUCCESS';
 export const ADD_LOCATION_ERROR = 'ADD_LOCATION_ERROR';
 export const REMOVE_LOCATION = 'REMOVE_LOCATION';
+export const ADD_MULTIPLE_LOCATIONS = 'ADD_MULTIPLE_LOCATIONS';
 
 const createColor = (luminosity = 'dark') =>
   randomColor({
     luminosity,
   });
+
+const addMultipleLocations = payload => {
+  return {
+    type: ADD_MULTIPLE_LOCATIONS,
+    payload,
+  };
+};
 
 const addLocationSuccess = payload => {
   return {
@@ -66,6 +78,16 @@ export const addLocation = ({ address, placeId }) => (dispatch, getState) => {
       dispatch(addLocationSuccess({ address, lat, lng, placeId, color: createColor() }));
     })
     .catch(err => dispatch(addLocationError(err)));
+};
+
+export const newRequestFromSavedSearch = ({ locations, locationsMidPoint, keyword = [] }) => dispatch => {
+  dispatch(toggleSavedSearches(false));
+  dispatch({
+    type: SET_AVERAGE_LAT_LNG,
+    payload: locationsMidPoint,
+  });
+  dispatch(addMultipleLocations(locations));
+  dispatch(getRecommendations({ keyword }));
 };
 
 export const removeLocation = placeId => ({
