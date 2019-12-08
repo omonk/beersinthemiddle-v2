@@ -37,12 +37,9 @@ const mapDispatchToProps = (dispatch, state) => {
       dispatch(addLocation({ address, placeId }));
     },
     handleRemoval: placeId => dispatch(removeLocation(placeId)),
-    fourSquareRequest: values => dispatch(getRecommendations(values)),
+    requestLocations: values => dispatch(getRecommendations(values)),
     toggleSearchBox: () => dispatch(toggleSearchBoxHidden()),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(SearchFormContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchFormContainer);

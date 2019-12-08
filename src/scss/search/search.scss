@@ -18,7 +18,7 @@ $search-padding: 0.25rem;
 
   @media screen and (min-width: 768px) {
     width: 33.3%;
-    padding: 1rem;
+    padding: #{$search-padding};
   }
 
   @media screen and (min-width: 1024px) {
@@ -31,6 +31,7 @@ $search-padding: 0.25rem;
 
   .box {
     max-height: calc(100vh - #{$search-padding} * 2);
+    overflow: scroll;
   }
 }
 
@@ -42,7 +43,7 @@ $search-padding: 0.25rem;
   opacity: 100;
   transition: opacity ease-in-out 400ms;
   text-align: center;
-  margin: 1rem 0 0.5rem;
+  margin: 1rem 0;
   display: block;
   width: 100%;
 

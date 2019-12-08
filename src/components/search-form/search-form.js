@@ -60,13 +60,14 @@ const types = [
 ];
 
 const SearchForm = ({
+  geolocation,
   isGeoLocating,
   isGeoLocatingError,
   locations,
   geoLocationRequest,
   addLocationToState,
   toggleSearchBox,
-  fourSquareRequest,
+  requestLocations,
   searchBoxIsHidden,
   handleRemoval,
   isLoading,
@@ -93,21 +94,23 @@ const SearchForm = ({
             <Form>
               <Field
                 name="inputValue"
-                render={({ field, form }) =>
-                  renderPlacesAutocomplete({
+                render={({ field, form }) => {
+                  return renderPlacesAutocomplete({
                     field,
                     form,
                     addLocationToState,
-                  })
-                }
+                  });
+                }}
               />
-              <button
-                className={`button ${isGeoLocating ? 'is-loading' : ''}`}
-                type="button"
-                onClick={geoLocationRequest}
-              >
-                <span>Add current location</span> <Icon icon={faMapPin} size="medium" />
-              </button>
+              {!geolocation.lat && !geolocation.lng && (
+                <button
+                  className={`button ${isGeoLocating ? 'is-loading' : ''}`}
+                  type="button"
+                  onClick={geoLocationRequest}
+                >
+                  <span>Add current location</span> <Icon icon={faMapPin} size="medium" />
+                </button>
+              )}
               {isGeoLocatingError && (
                 <p className="has-text-danger">
                   Hmm... we seem to have an issue locating you{' '}
@@ -160,7 +163,7 @@ const SearchForm = ({
           );
         }}
         onSubmit={({ types }) => {
-          fourSquareRequest({
+          requestLocations({
             keyword: types,
           });
         }}
