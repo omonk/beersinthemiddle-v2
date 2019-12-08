@@ -1,8 +1,4 @@
-import {
-  ADD_LOCATION_SUCCESS,
-  ADD_LOCATION_ERROR,
-  REMOVE_LOCATION,
-} from '../actions/locations';
+import { ADD_LOCATION_SUCCESS, ADD_LOCATION_ERROR, REMOVE_LOCATION } from '../actions/locations';
 const initialState = [];
 
 export default (state = initialState, action) => {

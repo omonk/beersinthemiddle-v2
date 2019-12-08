@@ -13,7 +13,6 @@ const renderPlacesAutocomplete = ({ field, form, addLocationToState }) => {
     <PlacesAutocomplete
       ref={c => {
         if (!c) return;
-        console.log({ c });
         c.handleInputOnBlur = () => {};
       }}
       value={field.value}
@@ -73,9 +72,10 @@ const SearchForm = ({
   toggleSavedSearches,
   handleRemoval,
   isLoading,
+  loadSearchBoxIsHidden,
 }) => {
   return (
-    <div>
+    <div className={`search-form ${loadSearchBoxIsHidden ? '' : 'search-form--hidden'}`}>
       <h1 className="title is-sr-only">
         Beers In The Middle{' '}
         <span role="img" aria-label="beer">
@@ -171,7 +171,7 @@ const SearchForm = ({
         }}
       />
       <button type="button" className="button is-fullwidth is-info search-hide" onClick={() => toggleSavedSearches()}>
-        Show saved searches
+        Previous searches
       </button>
       <button
         type="button"

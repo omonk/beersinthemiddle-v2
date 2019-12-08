@@ -27,7 +27,6 @@ const App = ({
   loadSearchBoxIsHidden,
   isRecommendationsLoading,
 }) => {
-  console.log({ loadSearchBoxIsHidden });
   return (
     <div className="App">
       <section className={`search ${searchBoxIsHidden ? 'search--is-hidden' : ''}`}>

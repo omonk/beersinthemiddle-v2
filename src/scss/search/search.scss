@@ -8,6 +8,15 @@ $search-padding: 0.25rem;
   width: 100%;
   padding: $search-padding;
 
+  &-form {
+    opacity: 1;
+    transition: opacity ease-in 200ms;
+
+    &--hidden {
+      opacity: 0;
+    }
+  }
+
   .title {
     font-family: 'Courier New';
   }

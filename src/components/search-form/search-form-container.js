@@ -27,6 +27,7 @@ const mapStateToProps = state => {
     recommendations: recommendations.locations,
     hasRecommendations,
     searchBoxIsHidden: ui.searchBoxIsHidden,
+    loadSearchBoxIsHidden: ui.loadSearchBoxIsHidden,
   };
 };
 

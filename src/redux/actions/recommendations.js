@@ -22,7 +22,9 @@ const setAverageLatLng = payload => ({
 });
 
 export default ({ keyword, openNow = true, minprice = 0, maxprice = 4 }) => (dispatch, getState) => {
-  const { lat, lng } = getLatLngMidPoint(getState());
+  const state = getState();
+  const { lat, lng } = getLatLngMidPoint(state);
+  const { locations } = state;
 
   if (lat && lng) {
     const query = `?lat=${lat}&lng=${lng}&keyword=${keyword.join(',')}`;
@@ -51,6 +53,11 @@ export default ({ keyword, openNow = true, minprice = 0, maxprice = 4 }) => (dis
           type: SET_RECOMMENDATIONS_LOADING,
         });
         dispatch(toggleSearchBoxHidden(true));
+
+        const previousSearches = JSON.parse(localStorage.getItem('previous-searches')) || [];
+        const newSearches = [...previousSearches, { date: Date.now(), locations }];
+
+        localStorage.setItem('previous-searches', JSON.stringify(newSearches));
       })
       .catch(err => {
         dispatch({
