@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import './scss/App.scss';
 
 import { connect } from 'react-redux';
@@ -11,8 +11,46 @@ import Recommendations from './components/recommendations/recommendations';
 import { updateMapZoomValue, centerMapToRecommendation } from './redux/actions/map';
 import { hasRecommendationsSelector } from './redux/selectors/recommendations/recommendations';
 import iconLibrary from './utils/icons';
+import styled from '@emotion/styled';
 
 iconLibrary();
+
+const Search = styled.div`
+  z-index: 10;
+  position: absolute;
+  top: 0;
+  transition: transform ease-in-out 400ms;
+
+  width: 100%;
+  min-height: 500px;
+  max-height: calc(100vh - 10px);
+  overflow: scroll;
+  background-color: white;
+  padding: 0.75rem;
+  border: 1px solid #b5b5b5;
+  border-radius: 5px;
+  box-shadow: 0px 5px 6px rgba(0, 0, 0, 0.2);
+  overflow-x: hidden;
+
+  ${({ searchIsHidden }) =>
+    searchIsHidden
+      ? `
+    transform: translateY(-75%);
+    overflow: hidden;
+  `
+      : ''}
+  ${({ isHidden }) => (isHidden ? 'transform: translateX(-105%);' : '')} 
+  
+  @media screen and (min-width: 768px) {
+    margin: 5px;
+    width: 33.3%;
+    padding: #{$search-padding};
+  }
+
+  @media screen and (min-width: 1024px) {
+    width: 25%;
+  }
+`;
 
 const App = ({
   locations,
@@ -27,16 +65,15 @@ const App = ({
   loadSearchBoxIsHidden,
   isRecommendationsLoading,
 }) => {
+  const searchFormRef = useRef(null);
   return (
     <div className="App">
-      <section className={`search ${searchBoxIsHidden ? 'search--is-hidden' : ''}`}>
-        <div className="box" style={{ position: 'relative' }}>
-          <SearchForm />
-          <div className={`box saved-searches ${loadSearchBoxIsHidden ? 'saved-searches--is-hidden' : ''}`}>
-            <SavedSearches />
-          </div>
-        </div>
-      </section>
+      <Search ref={searchFormRef} searchIsHidden={searchBoxIsHidden}>
+        <SearchForm searchBoxRef={searchFormRef} />
+      </Search>
+      <Search isHidden={loadSearchBoxIsHidden}>
+        <SavedSearches />
+      </Search>
 
       <Recommendations data={recommendations} centerMapToRecommendation={centerMapToRecommendation} />
 
@@ -82,4 +119,7 @@ const mapDispatchToProps = (dispatch, state) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(App);

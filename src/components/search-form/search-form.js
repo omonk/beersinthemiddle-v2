@@ -7,6 +7,7 @@ import generate from 'shortid';
 import Locations from '../locations';
 import Icon from '../common/icon';
 import titleImg from '../../assets/title.png';
+import styled from '@emotion/styled';
 
 const renderPlacesAutocomplete = ({ field, form, addLocationToState }) => {
   return (
@@ -58,6 +59,23 @@ const types = [
   { name: 'restaurant', label: 'Restaurant', checkedOnLoad: true },
 ];
 
+const Container = styled.div`
+  opacity: 1;
+  transition: opacity ease-in 200ms;
+
+  ${({ loadSearchBoxIsHidden }) =>
+    loadSearchBoxIsHidden
+      ? `
+      opacity: 0;
+      overflow: hidden;
+    `
+      : ''};
+`;
+
+const LogoWrapper = styled.div`
+  margin: 0.5rem 0;
+`;
+
 const SearchForm = ({
   geolocation,
   isGeoLocating,
@@ -73,19 +91,20 @@ const SearchForm = ({
   handleRemoval,
   isLoading,
   loadSearchBoxIsHidden,
+  searchBoxRef,
 }) => {
   return (
-    <div className={`search-form ${loadSearchBoxIsHidden ? '' : 'search-form--hidden'}`}>
+    <Container>
       <h1 className="title is-sr-only">
         Beers In The Middle{' '}
         <span role="img" aria-label="beer">
           🍻
         </span>
       </h1>
-      <div className="logo-wrapper">
+      <LogoWrapper>
         <img src={titleImg} alt="Beers in the middle logo" />
-      </div>
-      <h2 className="is-hidden-mobile">Find the most convienient places to hang out with your friends</h2>
+      </LogoWrapper>
+      <h2>Find the most convienient places to hang out with your friends</h2>
       <Formik
         initialValues={{
           inputValue: '',
@@ -176,11 +195,14 @@ const SearchForm = ({
       <button
         type="button"
         className="button is-fullwidth is-small is-primary search-hide"
-        onClick={() => toggleSearchBox()}
+        onClick={() => {
+          searchBoxRef.current.scrollTop = searchBoxRef.current.scrollHeight;
+          toggleSearchBox();
+        }}
       >
         {searchBoxIsHidden ? 'Show form' : 'Hide form'}
       </button>
-    </div>
+    </Container>
   );
 };
 

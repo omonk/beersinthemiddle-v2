@@ -11,11 +11,12 @@ const SearchFormContainer = props => {
   return <SearchForm {...props} />;
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   const { locations, geolocation, recommendations, map, ui } = state;
   const hasRecommendations = hasRecommendationsSelector(state);
 
   return {
+    ...ownProps,
     geolocation,
     locations,
     isLoading: ui.recommendationsLoading,
@@ -44,4 +45,7 @@ const mapDispatchToProps = (dispatch, state) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchFormContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SearchFormContainer);

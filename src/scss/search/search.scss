@@ -1,22 +1,6 @@
 $search-padding: 0.25rem;
 
 .search {
-  z-index: 10;
-  position: absolute;
-  top: 0;
-  transition: transform ease-in-out 400ms;
-  width: 100%;
-  padding: $search-padding;
-
-  &-form {
-    opacity: 1;
-    transition: opacity ease-in 200ms;
-
-    &--hidden {
-      opacity: 0;
-    }
-  }
-
   .title {
     font-family: 'Courier New';
   }
@@ -38,14 +22,10 @@ $search-padding: 0.25rem;
     margin: 1rem 0;
   }
 
-  .box {
+  > .box {
     max-height: calc(100vh - #{$search-padding} * 2);
     overflow: scroll;
   }
-}
-
-.logo-wrapper {
-  margin: 0.5rem 0;
 }
 
 .search-hide {

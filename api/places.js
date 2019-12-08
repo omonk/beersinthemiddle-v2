@@ -7,7 +7,7 @@ const googleMapsClient = require('@google/maps').createClient({
 });
 
 const formatResponse = venues => {
-  console.log({ venues });
+  console.log(JSON.stringify({ v: venues[0] }, null, 2));
   return venues.map(item => ({
     title: Get(item, 'name', undefined),
     id: Get(item, 'place_id', undefined),
