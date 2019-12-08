@@ -4,6 +4,10 @@
 
 @import '~bulma';
 
+.App {
+  overflow: hidden;
+}
+
 @import './map/map.scss';
 @import './search/search.scss';
 @import './recommendations/recommendations.scss';
