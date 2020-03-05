@@ -52,6 +52,7 @@
     "randomcolor": "^0.5.4",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
+    "react-ga": "^2.7.0",
     "react-helmet": "^5.2.1",
     "react-places-autocomplete": "^7.2.0",
     "react-redux": "^7.1.1",

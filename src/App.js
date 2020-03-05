@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import './scss/App.scss';
-
+import ReactGA from 'react-ga';
 import { connect } from 'react-redux';
 
 import SearchForm from './components/search-form/search-form-container';
@@ -14,6 +14,8 @@ import iconLibrary from './utils/icons';
 import styled from '@emotion/styled';
 
 iconLibrary();
+
+ReactGA.initialize('UA-59770883-3');
 
 const Search = styled.div`
   z-index: 10;
