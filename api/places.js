@@ -84,8 +84,8 @@ module.exports = async (req, res) => {
     });
   } catch (error) {
     res.status(500);
-    res.send(error.message);
     res.setHeader('Content-Type', 'application/json');
+    res.send(error.message);
 
     return;
   }
