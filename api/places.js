@@ -5,6 +5,7 @@ const distanceBetweenTwoCoords = require('./get-distance-between-coords');
 const chunk = require('lodash.chunk');
 const { Client } = require('@elastic/elasticsearch');
 
+console.log({ a: process.env.BITMELASTICSEARCH_ID });
 const es = new Client({
   cloud: {
     id: process.env.BITMELASTICSEARCH_ID,
@@ -86,8 +87,6 @@ module.exports = async (req, res) => {
     res.status(500);
     res.setHeader('Content-Type', 'application/json');
     res.send(error.message);
-
-    return;
   }
 
   return Promise.all(places)
