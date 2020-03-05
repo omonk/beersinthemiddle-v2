@@ -85,7 +85,7 @@ module.exports = async (req, res) => {
   } catch (error) {
     res.status(500);
     res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify({ err: error.message, env: process.env.BITMELASTICSEARCH_ID }));
+    res.send(JSON.stringify({ err: error.message, reason: error.reason }));
   }
 
   return Promise.all(places)
