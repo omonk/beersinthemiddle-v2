@@ -60,33 +60,33 @@ const formatResponse = (venues, origin) => {
 };
 
 module.exports = async (req, res) => {
-  const { lat, lng, radius = 500, keyword, locations } = req.query;
+  const { lat, lng, radius = 500, keyword } = req.query;
 
   const places = keyword
     .split(',')
     .map(keyword => googleMapsClient.placesNearby({ location: { lat, lng }, radius, keyword }).asPromise());
 
-  try {
-    await es.index({
-      index: 'search',
-      body: {
-        origin: { lat, lng },
-        locations: JSON.stringify(
-          chunk(
-            // lol this is so so bad
-            atob(locations)
-              .split(',')
-              .map(l => Number(l)),
-            2,
-          ),
-        ),
-      },
-    });
-  } catch (error) {
-    res.status(500);
-    res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify({ err: error.message, reason: error.reason }));
-  }
+  // try {
+  //   await es.index({
+  //     index: 'search',
+  //     body: {
+  //       origin: { lat, lng },
+  //       locations: JSON.stringify(
+  //         chunk(
+  //           // lol this is so so bad
+  //           atob(locations)
+  //             .split(',')
+  //             .map(l => Number(l)),
+  //           2,
+  //         ),
+  //       ),
+  //     },
+  //   });
+  // } catch (error) {
+  //   res.status(500);
+  //   res.setHeader('Content-Type', 'application/json');
+  //   res.send(JSON.stringify({ err: error.message, reason: error.reason }));
+  // }
 
   return Promise.all(places)
     .then(response => {
