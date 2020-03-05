@@ -1,6 +1,19 @@
 const Get = require('lodash.get');
 const { titleCase } = require('change-case');
+const atob = require('atob');
 const distanceBetweenTwoCoords = require('./get-distance-between-coords');
+const chunk = require('lodash.chunk');
+const { Client } = require('@elastic/elasticsearch');
+
+const es = new Client({
+  cloud: {
+    id: process.env.BITMELASTICSEARCH_ID,
+  },
+  auth: {
+    username: process.env.BITMELASTICSEARCH_USERNAME,
+    password: process.env.BITMELASTICSEARCH_PASSWORD,
+  },
+});
 
 const googleMapsClient = require('@google/maps').createClient({
   key: process.env.GMAPS,
@@ -47,11 +60,31 @@ const formatResponse = (venues, origin) => {
 };
 
 module.exports = async (req, res) => {
-  const { lat, lng, radius = 500, keyword } = req.query;
+  const { lat, lng, radius = 500, keyword, locations } = req.query;
 
   const places = keyword
     .split(',')
     .map(keyword => googleMapsClient.placesNearby({ location: { lat, lng }, radius, keyword }).asPromise());
+
+  async function run() {
+    await es.index({
+      index: 'search',
+      body: {
+        origin: { lat, lng },
+        locations: JSON.stringify(
+          chunk(
+            // lol this is so so bad
+            atob(locations)
+              .split(',')
+              .map(l => Number(l)),
+            2,
+          ),
+        ),
+      },
+    });
+  }
+
+  await run();
 
   return Promise.all(places)
     .then(response => {

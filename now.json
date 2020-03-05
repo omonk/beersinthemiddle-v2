@@ -6,6 +6,9 @@
   "env": {
     "GMAPS": "@gmaps",
     "FOURSQUARE_API_SECRET": "@foursquare_api_secret",
-    "FOURSQUARE_API_CLIENT": "@foursquare_api_client"
+    "FOURSQUARE_API_CLIENT": "@foursquare_api_client",
+    "BITMELASTICSEARCH_PASSWORD": "@bitmelasticsearch_password",
+    "BITMELASTICSEARCH_USERNAME": "@bitmelasticsearch_username",
+    "BITMELASTICSEARCH_ID": "@bitmelasticsearch_id"
   }
 }

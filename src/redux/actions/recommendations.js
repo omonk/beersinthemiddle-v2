@@ -3,6 +3,7 @@ import { getLatLngMidPoint } from '../selectors/locations/locations';
 import { setMapCenterFromLatestLocations } from './map';
 import { toggleSearchBoxHidden } from './ui';
 import { updateSavedSearches } from './saved-searches';
+import ReactGA from 'react-ga';
 
 export const FOUR_SQUARE_REQUEST = 'FOUR_SQUARE_REQUEST';
 export const FOUR_SQUARE_REQUEST_SUCCESS = 'FOUR_SQUARE_REQUEST_SUCCESS';
@@ -28,7 +29,9 @@ export default ({ keyword = [], openNow = true, minprice = 0, maxprice = 4 }) =>
   const { locations } = state;
 
   if (lat && lng) {
-    const query = `?lat=${lat}&lng=${lng}&keyword=${keyword.join(',')}`;
+    const query = `?lat=${lat}&lng=${lng}&keyword=${keyword.join(',')}&locations=${btoa(
+      locations.map(({ lat, lng }) => [lat, lng]),
+    )}`;
 
     dispatch(setAverageLatLng({ lat, lng }));
     dispatch({
