@@ -66,7 +66,7 @@ module.exports = async (req, res) => {
     .split(',')
     .map(keyword => googleMapsClient.placesNearby({ location: { lat, lng }, radius, keyword }).asPromise());
 
-  async function run() {
+  try {
     await es.index({
       index: 'search',
       body: {
@@ -82,9 +82,13 @@ module.exports = async (req, res) => {
         ),
       },
     });
-  }
+  } catch (error) {
+    res.status(500);
+    res.send(error.message);
+    res.setHeader('Content-Type', 'application/json');
 
-  await run();
+    return;
+  }
 
   return Promise.all(places)
     .then(response => {
