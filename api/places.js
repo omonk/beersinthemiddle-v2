@@ -66,7 +66,6 @@ module.exports = async (req, res) => {
     .split(',')
     .map(keyword => googleMapsClient.places({ location: { lat, lng }, radius, query: keyword }).asPromise());
 
-  let err;
   try {
     await es.index({
       index: 'search',
@@ -84,10 +83,9 @@ module.exports = async (req, res) => {
       },
     });
   } catch (error) {
-    err = error;
-    // res.status(500);
-    // res.setHeader('Content-Type', 'application/json');
-    // res.send(JSON.stringify({ err: error.message, reason: error.reason }));
+    res.status(500);
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify({ err: error.message, reason: error.reason }));
   }
 
   return Promise.all(places)
@@ -97,7 +95,7 @@ module.exports = async (req, res) => {
     })
     .then(recommendations => {
       res.setHeader('Content-Type', 'application/json');
-      res.send(JSON.stringify({ recommendations, err }));
+      res.send(JSON.stringify({ recommendations }));
     })
     .catch(err => {
       console.log('ERROR', err);
