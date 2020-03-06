@@ -60,33 +60,35 @@ const formatResponse = (venues, origin) => {
 };
 
 module.exports = async (req, res) => {
-  const { lat, lng, radius = 250, keyword } = req.query;
+  const { lat, lng, radius = 250, keyword, locations } = req.query;
 
   const places = keyword
     .split(',')
     .map(keyword => googleMapsClient.places({ location: { lat, lng }, radius, query: keyword }).asPromise());
 
-  // try {
-  //   await es.index({
-  //     index: 'search',
-  //     body: {
-  //       origin: { lat, lng },
-  //       locations: JSON.stringify(
-  //         chunk(
-  //           // lol this is so so bad
-  //           atob(locations)
-  //             .split(',')
-  //             .map(l => Number(l)),
-  //           2,
-  //         ),
-  //       ),
-  //     },
-  //   });
-  // } catch (error) {
-  //   res.status(500);
-  //   res.setHeader('Content-Type', 'application/json');
-  //   res.send(JSON.stringify({ err: error.message, reason: error.reason }));
-  // }
+  let err;
+  try {
+    await es.index({
+      index: 'search',
+      body: {
+        origin: { lat, lng },
+        locations: JSON.stringify(
+          chunk(
+            // lol this is so so bad
+            atob(locations)
+              .split(',')
+              .map(l => Number(l)),
+            2,
+          ),
+        ),
+      },
+    });
+  } catch (error) {
+    err = error;
+    // res.status(500);
+    // res.setHeader('Content-Type', 'application/json');
+    // res.send(JSON.stringify({ err: error.message, reason: error.reason }));
+  }
 
   return Promise.all(places)
     .then(response => {
@@ -95,7 +97,7 @@ module.exports = async (req, res) => {
     })
     .then(recommendations => {
       res.setHeader('Content-Type', 'application/json');
-      res.send(JSON.stringify({ recommendations }));
+      res.send(JSON.stringify({ recommendations, err }));
     })
     .catch(err => {
       console.log('ERROR', err);
