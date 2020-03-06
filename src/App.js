@@ -67,6 +67,8 @@ const App = ({
   loadSearchBoxIsHidden,
   isRecommendationsLoading,
 }) => {
+  ReactGA.pageview(window.location.pathname + window.location.search);
+
   const searchFormRef = useRef(null);
   return (
     <div className="App">
