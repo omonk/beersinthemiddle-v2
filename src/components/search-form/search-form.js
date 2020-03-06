@@ -106,11 +106,22 @@ const SearchForm = ({
       </LogoWrapper>
       <h2>Find the most convienient places to hang out with your friends</h2>
       <Formik
+        validateOnBlur={false}
+        validateOnChange={false}
         initialValues={{
           inputValue: '',
           types: types.filter(({ checkedOnLoad: i }) => i).map(({ name }) => name),
         }}
-        render={({ values }) => {
+        validate={values => {
+          const errors = {};
+
+          if (Array.isArray(values.types) && values.types.length < 1) {
+            errors.types = 'Please select at least one filter';
+          }
+
+          return errors;
+        }}
+        render={({ values, errors }) => {
           return (
             <Form>
               <Field
@@ -172,6 +183,7 @@ const SearchForm = ({
                     </>
                   )}
                 />
+                {errors.types && <p className="has-text-danger">Please select at least one filter</p>}
               </section>
               <button
                 type="submit"
