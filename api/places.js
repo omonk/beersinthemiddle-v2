@@ -60,11 +60,11 @@ const formatResponse = (venues, origin) => {
 };
 
 module.exports = async (req, res) => {
-  const { lat, lng, radius = 500, keyword } = req.query;
+  const { lat, lng, radius = 250, keyword } = req.query;
 
   const places = keyword
     .split(',')
-    .map(keyword => googleMapsClient.placesNearby({ location: { lat, lng }, radius, keyword }).asPromise());
+    .map(keyword => googleMapsClient.places({ location: { lat, lng }, radius, query: keyword }).asPromise());
 
   // try {
   //   await es.index({
