@@ -1,6 +1,7 @@
 const Get = require('lodash.get');
 const { titleCase } = require('change-case');
 const atob = require('atob');
+const { v4: uuid } = require('uuid');
 const distanceBetweenTwoCoords = require('./get-distance-between-coords');
 const chunk = require('lodash.chunk');
 const { Client } = require('@elastic/elasticsearch');
@@ -70,6 +71,8 @@ module.exports = async (req, res) => {
     await es.index({
       index: 'search',
       body: {
+        id: uuid(),
+        publishedAt: new Date().toJSON(),
         origin: { lat, lng },
         locations: JSON.stringify(
           chunk(
@@ -85,7 +88,8 @@ module.exports = async (req, res) => {
   } catch (error) {
     res.status(500);
     res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify({ err: error.message, reason: error.reason }));
+    res.send(JSON.stringify({ error }));
+    return;
   }
 
   return Promise.all(places)
