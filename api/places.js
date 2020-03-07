@@ -5,6 +5,7 @@ const { v4: uuid } = require('uuid');
 const distanceBetweenTwoCoords = require('./get-distance-between-coords');
 const chunk = require('lodash.chunk');
 const { Client } = require('@elastic/elasticsearch');
+const fetch = require('node-fetch');
 
 const es = new Client({
   cloud: {
@@ -94,13 +95,18 @@ const formatResponse = (venues, origin) => {
 module.exports = async (req, res) => {
   const { lat, lng, radius = 250, keyword, locations } = req.query;
 
-  const places = keyword
-    .split(',')
-    .map(keyword => googleMapsClient.places({ location: { lat, lng }, radius, query: keyword }).asPromise());
-
-  return Promise.all(places)
+  return Promise.all(
+    keyword.split(',').map(keyword => {
+      return fetch(
+        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${process.env.GMAPS}&location=${lat},${lng}&radius=${radius}&keyword=${keyword}&type=${keyword}`,
+        { headers: { 'Content-Type': 'application/json' } },
+      ).then(r => r.json());
+    }),
+  )
     .then(response => {
-      const { results } = response.reduce((acc, { json }) => ({ ...acc, ...json }), []);
+      const { results } = response.reduce((acc, result) => {
+        return { ...acc, ...result };
+      }, []);
       return formatResponse(results, { lat, lng });
     })
     .then(async recommendations => {
