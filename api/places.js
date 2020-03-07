@@ -104,8 +104,8 @@ module.exports = async (req, res) => {
     }),
   )
     .then(response => {
-      const { results } = response.reduce((acc, result) => {
-        return { ...acc, ...result };
+      const results = response.reduce((acc, { results }) => {
+        return acc.concat(results);
       }, []);
       return formatResponse(results, { lat, lng });
     })
