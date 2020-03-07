@@ -16,10 +16,41 @@ const es = new Client({
   },
 });
 
+const index = async ({ lat, lng, recommendations, locations, res }) => {
+  // lol this is so so bad
+  const origins = chunk(
+    atob(locations)
+      .split(',')
+      .map(l => Number(l)),
+    2,
+  ).map(([lat, lon]) => ({ lat, lon }));
+
+  try {
+    await es.index({
+      index: 'recommendations',
+      body: {
+        id: uuid(),
+        publishedAt: new Date().toJSON(),
+        average_lat_lng: { lat, lon: lng },
+        origins,
+        recommendations: recommendations.map(({ title, id }) => ({ title, id })),
+      },
+    });
+  } catch (error) {
+    // console.log(JSON.stringify({ error }, null, 2));
+    // // res.status(500);
+    // // res.setHeader('Content-Type', 'application/json');
+    // // return error;
+    //
+  }
+};
+
 const googleMapsClient = require('@google/maps').createClient({
   key: process.env.GMAPS,
   Promise,
 });
+
+const isProd = process.env.NODE_ENV === 'production';
 
 const formatResponse = (venues, origin) => {
   return venues
@@ -73,31 +104,7 @@ module.exports = async (req, res) => {
       return formatResponse(results, { lat, lng });
     })
     .then(async recommendations => {
-      try {
-        await es.index({
-          index: 'search',
-          body: {
-            id: uuid(),
-            publishedAt: new Date().toJSON(),
-            origin: { lat, lng },
-            recommendations: recommendations.map(({ title, id }) => ({ title, id })),
-            locations: JSON.stringify(
-              chunk(
-                // lol this is so so bad
-                atob(locations)
-                  .split(',')
-                  .map(l => Number(l)),
-                2,
-              ),
-            ),
-          },
-        });
-      } catch (error) {
-        res.status(500);
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify({ error }));
-        return;
-      }
+      isProd && (await index({ lat, lng, recommendations, locations, res }));
 
       res.setHeader('Content-Type', 'application/json');
       res.send(JSON.stringify({ recommendations }));
