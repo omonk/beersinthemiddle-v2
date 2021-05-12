@@ -45,7 +45,7 @@
     "history": "^4.7.2",
     "lodash.chunk": "^4.2.0",
     "lodash.get": "^4.4.2",
-    "mathjs": "^6.2.1",
+    "mathjs": "^7.5.1",
     "moment": "^2.24.0",
     "moment-duration-format": "^2.2.2",
     "moment-timezone": "^0.5.23",
