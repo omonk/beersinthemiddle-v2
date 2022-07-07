@@ -46,7 +46,7 @@
     "lodash.chunk": "^4.2.0",
     "lodash.get": "^4.4.2",
     "mathjs": "^6.2.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "moment-duration-format": "^2.2.2",
     "moment-timezone": "^0.5.23",
     "node-fetch": "^2.6.0",
